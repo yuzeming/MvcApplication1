@@ -1,0 +1,48 @@
+﻿@model IEnumerable<MvcApplication1.Models.Problem>
+@using MvcApplication1.Models
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>#</th>
+        <th>题目名称</th>
+        <th>题目得分</th>
+        <th>操作</th>
+    </tr>
+
+@foreach (var item in Model) {
+    string state = "";
+    string src = "无记录";
+    if (ViewBag.Record.ContainsKey(item.ID))
+    {
+        Submit tmp = ViewBag.Record[item.ID];
+        state = tmp.State == SubmitState.Accepted ? "success" : "danger";
+        src = tmp.Score.ToString();
+    }
+    <tr class="@state">
+        <td>
+            @item.ID
+        </td>
+        <td>
+            @Html.ActionLink(item.Title, "Details", new { id=item.ID })
+        </td>
+        <td>
+            @src
+        </td>
+        <td>
+            @Html.ActionLink("Submit", "Create","Submit", new { id=item.ID },null) |
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID }) |
+            @Html.ActionLink("Downland", "Downland", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

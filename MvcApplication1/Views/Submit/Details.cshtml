@@ -1,0 +1,55 @@
+﻿@model MvcApplication1.Models.Submit
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<table class="table table-striped">
+    <tr>
+        <td>用户名：@Model.User.UserName</td>
+        <td>题目：@Model.Prob.Title</td>
+        <td>提交ID：@Model.ID</td>
+        <td colspan="2" title="@Model.CompilerRes">状态：@Model.State</td>
+    </tr>
+    <tr>
+        <th style="width:20%">得分</th>
+        <th>详情</th>
+        <th style="width:15%">时间</th>
+        <th style="width:15%">内存</th>
+    </tr>
+    @if (ViewBag.Res.Count > 0)
+    {
+        foreach (var x in ViewBag.Res)
+        {
+        <tr>
+            @foreach (var y in x)
+            {
+                <td>@y</td>
+            }
+        </tr>   
+            
+        }
+        <tr>
+            <th>总分</th>
+            <th>@Model.Score</th>
+            <th>@Model.Time</th>
+            <th>@Model.Lang</th>
+        </tr>
+    }
+    else
+    {
+        <tr>
+            <th colspan="4">空</th>
+        </tr>
+    }
+
+</table>
+
+<h3>源代码</h3>
+<pre><code>@Model.Source</code></pre>
+
+
+<h3>编译器输出</h3>
+<pre>@Model.CompilerRes</pre>
