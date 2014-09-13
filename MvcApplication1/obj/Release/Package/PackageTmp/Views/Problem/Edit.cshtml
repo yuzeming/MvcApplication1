@@ -1,0 +1,23 @@
+﻿@model MvcApplication1.FormModels.UploadProblemModel
+
+@{
+    ViewBag.Title = "Edit";
+    ViewBag.Tip = "不修改数据内容请留空。";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "Problem", FormMethod.Post, new { enctype = "multipart/form-data", @class = "col-md-4" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.EditorForModel()
+    
+    <input type="submit" value="提交" class="btn btn-default" />
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

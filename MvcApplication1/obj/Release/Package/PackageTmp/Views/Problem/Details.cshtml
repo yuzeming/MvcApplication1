@@ -1,0 +1,14 @@
+﻿@model MvcApplication1.Models.Problem
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h1>@Model.Title</h1>
+<div class="col-md-10">
+@Html.Raw(@Model.Description)
+</div>
+<div class="col-md-2">
+    <pre>CheckSum:@Model.CheckSum</pre>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ID })
+</div>

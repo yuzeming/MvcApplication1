@@ -1,0 +1,222 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+import base64
+from string import strip
+import copy
+import types
+import json
+import urllib
+import zipfile
+from xmlrpclib import ServerProxy
+
+from Conf import *
+from Win_R import *
+from HashFile import *
+from Web import *
+
+
+#CompileConf={
+#        "cpp":["g++ $(SRC) -O2 -o $(EXE)","$(EXE)","cpp"],
+#        "pas":["fpc $(SRC) -O2 -o $(EXE)","$(EXE)","pas"],
+#    }
+
+#ProbConf=[
+#    ["sum.in","sum.out"], #input,output
+#    ["Diff","%(OUT)","%(ANS)","%(IN)"],#Compare
+#    [
+#        [10,["1.in","1.out",10,128],["2.in","2.out",10,128],["3.in","3.out",10,128]],#Sub1
+#        [10,["4.in","4.out",10,128],["5.in","5.out",10,128],["6.in","6.out",10,128]],#Sub2
+#    ],#DataConf
+#]
+#SubmitRes=[
+#    100,    # SID
+#    None,   # System Error
+#    [0,""], #CompileRet,CompileRes
+#    [10,False,#TotSrc,isAC,
+#    [
+#        [10,[1,"OK",2,123],[1,"OK",2,123],[1,"OK",2,123]],#Sub1
+#        [0,[1,"OK",2,123],[0,"BAD",2,123],[1,"OK",2,123]],#Sub2
+#    ]],#DataRes
+#]
+
+def GetConf(name):
+    """
+    读取name文件中的json
+    """
+    try:
+        ret = json.loads(file(name).read())
+    except ValueError:
+        raise
+        ret = None
+    return ret
+
+
+def SaveToFile(text, name):
+    f = open(name, "w")
+    f.write(text)
+    f.close()
+
+
+def Split(s):
+    if type(s) == types.StringType:
+        return s.split(" ")
+    else:
+        return copy.deepcopy(s)
+
+
+def Replace(L, M):
+    for i in range(len(L)):
+        if M.has_key(L[i]):
+            L[i] = M[L[i]]
+
+
+def Compile(Src, Exe, conf):
+    conf = Split(conf)
+    Replace(conf, {"$(SRC)": Src, "$(EXE)": Exe})
+    pp = CreatePipe()
+    Ret = Exec(conf, CompileLimits, [None, pp[1], pp[1]])
+    return [Ret[0], ReadPipe(pp)]
+
+
+def GetData(name, dir , sha):
+    f = os.path.join(DataDir,str(name) + ".zip")
+    shafn = os.path.join(DataDir, str(name) + ".sha256")
+    fsha = ""
+    if os.path.exists(shafn):
+        fsha = file(shafn).read()
+    url = GetDataURL(JudgeKey, name)
+    if fsha != sha:
+        try:
+            urllib.urlretrieve(url, f)
+        except IOError:
+            return False
+        fsha = HashFile(open(f, "rb"))
+        if fsha != sha:
+            return False
+        SaveToFile(fsha, shafn)
+        if os.path.exists(dir):
+            os.rmdir(dir)
+        os.mkdir(dir)
+        zipFile = zipfile.ZipFile(f)
+        zipFile.extractall(dir)
+        zipFile.close()
+        mk = os.path.join(dir, "Makefile")
+        if os.path.exists(mk):
+            e = Exec(["make"], RootDir=dir)
+            if not e[0]:
+                return False
+    return True
+
+
+def Judge(s):
+    Ret = {
+        "ID": s["ID"],
+        "Score": 0,
+        "State": "",
+        "Result": [],
+        "CompilerRes": "",
+    }
+    try:
+        DataRoot = os.path.join(DataDir, str(s["ProbID"]))
+        DataConfFile = os.path.join(DataRoot, "config.json")
+        if not GetData(s["ProbID"], DataRoot,s["ProbCheckSum"]):
+            Ret["State"] = u"SystemError"
+            Ret["CompilerRes"] = u"数据未找到"
+        ProbConf = GetConf(DataConfFile)
+        if ProbConf is None:
+            Ret["State"] = u"SystemError"
+            Ret["CompilerRes"] = u"数据配置无法读取"
+        if Ret["State"]:
+            return Ret
+
+        Src = os.path.join(SrcDir, str(s["ID"]) + "." + CompileConf[s["Lang"]][2])
+        Exe = os.path.join(TempDir, str(s["ID"])) + ExeExt
+
+        SaveToFile(s["Source"], Src)
+
+        tmp,Ret["CompilerRes"] = Compile(Src, Exe, CompileConf[s["Lang"]][0])
+        if not tmp:
+            Ret["State"] = u"CompileError"
+            return Ret
+
+        RunCmd = Split(CompileConf[s["Lang"]][1])
+        Replace(RunCmd, {"$(EXE)": Exe})
+        if "Compare" in ProbConf:
+            CompareConf = Split(ProbConf["Compare"])
+        else:
+            CompareConf = Split(DefaultCompareConf)
+        if os.path.exists(os.path.join(DataRoot, CompareConf[0])):
+            CompareConf[0] = os.path.join(DataRoot, CompareConf[0])
+        else:
+            CompareConf[0] = os.path.join(ComparerDir, CompareConf[0])
+        OutputFileName = os.path.join(TempDir, "output.txt")
+        DataConf = ProbConf["Data"]
+
+        FirstError = ""
+        for Data in DataConf:
+            Input = os.path.join(DataRoot, "data", Data[0])
+            Output = os.path.join(DataRoot, "data", Data[1])
+
+            Limit = Data[2:4]
+            inf = win32file.CreateFileW(Input, win32file.GENERIC_READ, win32file.FILE_SHARE_READ, sa, win32file.OPEN_EXISTING, 0, None)
+            ouf = win32file.CreateFileW(OutputFileName, win32file.GENERIC_WRITE, 0, sa, win32file.CREATE_ALWAYS, 0, None)
+            pp = [inf, ouf, None]
+            DataRes = Exec(RunCmd, Limit, pp, TempDir)
+            win32file.CloseHandle(inf)
+            win32file.CloseHandle(ouf)
+            if DataRes[0]:
+                if not os.path.exists(OutputFileName):
+                    DataRes[0:2] = [0, u"输出文件未找到"]
+                else:
+                    tmpCC = copy.deepcopy(CompareConf)
+                    Replace(tmpCC, {"$(IN)": Input, "$(OUT)": OutputFileName, "$(ANS)": Output, })
+                    pp = CreatePipe()  # (read_end,write_end)
+                    CRet = Exec(tmpCC, pp=[None, pp[1], None])
+                    CRes = ReadPipe(pp)
+                    CRes = CRes.decode('gbk')
+                    DataRes[0:2] = [0, u"ValidatorError"]
+                    if CRet[0]:
+                        tmpList = CRes.split(" ", 1)
+                        tmpList[0] = float(tmpList[0])
+                        if 0 <= tmpList[0] <= 1:
+                            DataRes[0] = tmpList[0] * float(Data[4])
+                            DataRes[1] = strip(tmpList[1])
+                            if tmpList[0] == 1:
+                                DataRes[1] =DataRes[1] or u"Accepted"
+                            else:
+                                DataRes[1] =DataRes[1] or u"WrongAnswer"
+                                FirstError = u"WrongAnswer"
+                    #Clean up
+                DelFile(OutputFileName)
+            if (not FirstError and DataRes[1] != u"Accepted"):
+                FirstError = DataRes[1]
+            Ret["Score"] += DataRes[0]
+            Ret["Result"].append(DataRes)
+        DelFile(Exe)
+        Ret["State"] = FirstError or u"Accepted"
+    except:
+        raise
+        Ret["State"] = u"SystemError"
+
+    return Ret
+
+
+isRunning = True
+
+
+def Main():
+    """
+    主程序
+    """
+    while isRunning:
+        #try:
+        s = GetSubmit(JudgeKey)
+        if s is not None:
+            Res = Judge(s)
+            PostRes(JudgeKey, Res)
+        else:
+            sleep(10)
+
+
+if __name__ == '__main__':
+    Main()

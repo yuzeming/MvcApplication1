@@ -41,7 +41,8 @@ namespace MvcApplication1.Controllers
             var tmp = db.Submits.FirstOrDefault(m => m.State == SubmitState.Waiting);
             if (tmp == null)
                 return null;
-            tmp.State = SubmitState.Running;
+            // For Debug
+            //  tmp.State = SubmitState.Running;
             db.Entry(tmp).State = EntityState.Modified;
             db.SaveChanges();
             var ret = Mapper.Map<SubmitApiModels>(tmp);

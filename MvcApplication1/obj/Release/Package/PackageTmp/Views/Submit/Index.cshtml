@@ -1,0 +1,95 @@
+﻿@model MvcApplication1.FormModels.SubmitSearchModel
+@using MvcApplication1.Models
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@Html.Partial("_Pagination")
+
+<form class="form-inline" role="form">
+    <div class="form-group">
+        @Html.TextBoxFor( m => m.PID,new {@class="form-control",placeholder="题目ID" })
+    </div>
+    <div class="form-group">
+        @Html.TextBoxFor( m => m.User,new {@class="form-control",placeholder="用户名" })
+    </div>
+    <div class="form-group">
+        @Html.DropDownList("State",(List<SelectListItem>) ViewBag.StateList,new {@class="form-control"})
+    </div>
+    <button type="submit" class="btn btn-default">搜索</button>
+</form>
+@if (ViewBag.isSearch)
+{
+    <p class="help-block">由于设定了搜索条件，仅显示了符合条件的数据</p>
+}
+<table class="table table-striped">
+    <tr>
+        <th>#</th>
+        <th>
+            题目
+        </th>
+        <th>
+            用户
+        </th>
+        <th>
+            提交时间
+        </th>
+        <th>
+            状态
+        </th>
+        <th>
+            成绩
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in ViewBag.Res) {
+    <tr>
+        <td>
+            @item.ID
+        </td>
+        <td>
+            @item.Prob.Title
+        </td>
+        <td>
+            @item.User.UserName
+        </td>
+        <td>
+            @item.Time
+        </td>
+        @if (item.State == SubmitState.Waiting || item.State == SubmitState.Running)
+        {
+            <td colspan="2">@item.State</td>
+        }
+        else
+        {
+            <td>
+                @item.State
+            </td>
+            <td>
+                @item.Score
+            </td>
+        }
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+@if (ViewBag.isSearch)
+{
+    <form class="form-inline" role="form" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="Rejudge" value="REJDGE" />
+        <button type="submit" class="btn btn-danger" >重新评测</button>
+    </form>
+}
+else
+{
+    <button class="btn btn-danger" disabled="disabled">重新评测</button>
+    <span class="helpblock">请先确定搜索范围。</span>
+}
