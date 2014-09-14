@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
+'''
+提供Win/Linux下的统一Api
+'''
 from time import sleep
 import win32api
 import win32event
@@ -11,7 +13,6 @@ import win32security
 
 import pywintypes
 import win32con
-
 
 WIN32_PROCESS_TIMES_TICKS_PER_SECOND = 1e7
 
@@ -80,6 +81,10 @@ def Exec(argv, limit=None, pp=None, RootDir=None):
 
 
 def CreatePipe():
+    '''
+    注意Win下创建管道市并没有真的创建。
+    当向管道写入才会创建管道
+    '''
     pp = win32pipe.CreatePipe(sa, 0)
     win32file.WriteFile(pp[1], "@")
     return pp
@@ -90,6 +95,9 @@ def CloseHandle(h):
 
 
 def ReadPipe(pp, size=1024 * 4 + 1):
+    '''
+    读取管道并删除第一个字符
+    '''
     CloseHandle(pp[1])
     ret = win32file.ReadFile(pp[0], size)
     CloseHandle(pp[0])

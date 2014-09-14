@@ -2,12 +2,11 @@
  # -*- coding: utf-8 -*-
 import json
 import requests
-import time
-from pprint import pprint
+import Conf
 __author__ = 'yzm'
 
-url = "http://localhost:54764/api/Judge"
-DLurl = "http://localhost:54764/Problem/Downland/%d"
+url = Conf.WebServer+"/api/Judge"
+DLurl = Conf.WebServer+"/Problem/Downland/%d"
 
 
 def GetSubmit(jk):

@@ -1,43 +1,14 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import base64
 from string import strip
 import copy
 import types
-import json
 import urllib
 import zipfile
-from xmlrpclib import ServerProxy
-
 from Conf import *
 from Win_R import *
 from HashFile import *
 from Web import *
-
-
-#CompileConf={
-#        "cpp":["g++ $(SRC) -O2 -o $(EXE)","$(EXE)","cpp"],
-#        "pas":["fpc $(SRC) -O2 -o $(EXE)","$(EXE)","pas"],
-#    }
-
-#ProbConf=[
-#    ["sum.in","sum.out"], #input,output
-#    ["Diff","%(OUT)","%(ANS)","%(IN)"],#Compare
-#    [
-#        [10,["1.in","1.out",10,128],["2.in","2.out",10,128],["3.in","3.out",10,128]],#Sub1
-#        [10,["4.in","4.out",10,128],["5.in","5.out",10,128],["6.in","6.out",10,128]],#Sub2
-#    ],#DataConf
-#]
-#SubmitRes=[
-#    100,    # SID
-#    None,   # System Error
-#    [0,""], #CompileRet,CompileRes
-#    [10,False,#TotSrc,isAC,
-#    [
-#        [10,[1,"OK",2,123],[1,"OK",2,123],[1,"OK",2,123]],#Sub1
-#        [0,[1,"OK",2,123],[0,"BAD",2,123],[1,"OK",2,123]],#Sub2
-#    ]],#DataRes
-#]
 
 def GetConf(name):
     """
@@ -58,6 +29,9 @@ def SaveToFile(text, name):
 
 
 def Split(s):
+    '''
+    按空格拆分参数，暂时不能处理双引号
+    '''
     if type(s) == types.StringType:
         return s.split(" ")
     else:
@@ -107,6 +81,14 @@ def GetData(name, dir , sha):
                 return False
     return True
 
+
+def Decode(str,code):
+    for c in code:
+        try:
+            return str.decode(c)
+        except UnicodeError:
+            pass
+    return None
 
 def Judge(s):
     Ret = {
@@ -172,8 +154,7 @@ def Judge(s):
                     Replace(tmpCC, {"$(IN)": Input, "$(OUT)": OutputFileName, "$(ANS)": Output, })
                     pp = CreatePipe()  # (read_end,write_end)
                     CRet = Exec(tmpCC, pp=[None, pp[1], None])
-                    CRes = ReadPipe(pp)
-                    CRes = CRes.decode('gbk')
+                    CRes = Decode(ReadPipe(pp),["gbk","uft-8","gb2112"])
                     DataRes[0:2] = [0, u"ValidatorError"]
                     if CRet[0]:
                         tmpList = CRes.split(" ", 1)
@@ -208,6 +189,9 @@ def Main():
     """
     主程序
     """
+    for x in [SrcDir,DataDir,TempDir,ComparerDir]:
+        if not os.path.isdir(x):
+            os.mkdir(x)
     while isRunning:
         #try:
         s = GetSubmit(JudgeKey)
@@ -215,7 +199,7 @@ def Main():
             Res = Judge(s)
             PostRes(JudgeKey, Res)
         else:
-            sleep(10)
+            sleep(3)
 
 
 if __name__ == '__main__':
