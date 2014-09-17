@@ -10,5 +10,6 @@
 </div>
 <div class="col-md-2">
     <pre>CheckSum:@Model.CheckSum</pre>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.ID })
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID },new { @class = "btn btn-default" })
+    @Html.ActionLink("Submit", "Create","Submit", new { id=Model.ID ,c = ViewBag.c},new { @class = "btn btn-default" })
 </div>

@@ -15,10 +15,20 @@ using MvcApplication1.Filters;
 
 namespace MvcApplication1.Controllers
 {
-    //[InitializeSimpleMembership]
+    [Authorize]
     public class SubmitController : Controller
     {
         private MyDbContext db = new MyDbContext();
+
+        [NonAction]
+        public void SetUpdate(Contest c)
+        {
+            if (c != null)
+            {
+                c.Update = true;
+                db.Entry(c).State = EntityState.Modified;
+            }
+        }
 
         public IQueryable<Submit> Search(IQueryable<Submit> query, SubmitSearchModel search)
         {
@@ -64,9 +74,10 @@ namespace MvcApplication1.Controllers
             var query = Search(db.Submits,search);
             if (Request.Form["Rejudge"] == "REJDGE")
             {
-                foreach (var x in query)
+                foreach (var x in query.ToList())
                 {
                     x.State = SubmitState.Waiting;
+                    SetUpdate(x.Belog);
                     db.Entry(x).State = EntityState.Modified;
                 }
                 db.SaveChanges();
@@ -87,24 +98,34 @@ namespace MvcApplication1.Controllers
             return View(submit);
         }
 
-        public ActionResult Create(int id = 0)
+        public ActionResult Create(int id = 0,int c = 0)
         {
             var tmp = db.Problems.Find(id);
             if (tmp == null)
                 return HttpNotFound();
             ViewBag.ProbTitle =tmp.Title;
+            if (c!=0)
+            {
+                ViewBag.ContTitle = db.Contests.Find(c).Title;
+            }
             return View(new SubmitModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult Create(SubmitModel submit,int id = 0)
+        public ActionResult Create(SubmitModel submit,int id = 0,int c = 0)
         {
             var prob = db.Problems.Find(id);
             if (prob == null)
                 return HttpNotFound();
             var tmp = CreateSubmit(prob, submit);
+            if (c != 0)
+            {
+                var tc = db.Contests.Find(c);
+                tmp.Belog = tc;
+                SetUpdate(tc);
+            }
             if (ModelState.IsValid)
             {
                 db.Submits.Add(tmp);
@@ -130,6 +151,7 @@ namespace MvcApplication1.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Submit submit = db.Submits.Find(id);
+            SetUpdate(submit.Belog);
             db.Submits.Remove(submit);
             db.SaveChanges();
             return RedirectToAction("Index");

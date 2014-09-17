@@ -2,13 +2,85 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="23545965-0a39-4742-9a6a-37c6b3787d2d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vagrant.xml" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\App.config" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\ConsoleApplication1.csproj" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\Program.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\Properties\AssemblyInfo.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.vshost.exe" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.vshost.exe.config" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\bin\Debug\ConsoleApplication1.vshost.exe.manifest" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\bin\Debug\Newtonsoft.Json.dll" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\bin\Debug\Newtonsoft.Json.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\bin\Debug\Prob\1_725b46731b14c37eee6f282cf697b0e416ef1231e371e2b40e982c47a05b2241" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\bin\Debug\Prob\1_725b46731b14c37eee6f282cf697b0e416ef1231e371e2b40e982c47a05b2241.zip" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\bin\Debug\Src\5.cpp" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\bin\Debug\Tmp\5.exe" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.csproj.FileListAbsolute.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\obj\Release\DesignTimeResolveAssemblyReferencesInput.cache" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\obj\Release\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\ConsoleApplication1\packages.config" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1.sha256" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1.zip" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\config.json" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone1.in" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone1.out" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone10.in" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone10.out" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone2.in" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone2.out" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone3.in" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone3.out" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone4.in" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone4.out" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone5.in" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone5.out" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone6.in" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone6.out" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone7.in" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone7.out" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone8.in" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone8.out" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone9.in" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\data\phone9.out" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\phone.cpp" afterPath="" />
+      <change type="DELETED" beforePath="C:\MvcApplication1\Judge\data\1\prob.html" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/App_Data/DataBase.mdf" afterPath="$PROJECT_DIR$/../MvcApplication1/App_Data/DataBase.mdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/App_Data/DataBase_log.ldf" afterPath="$PROJECT_DIR$/../MvcApplication1/App_Data/DataBase_log.ldf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/obj/Debug/DesignTimeResolveAssemblyReferences.cache" afterPath="$PROJECT_DIR$/../MvcApplication1/obj/Debug/DesignTimeResolveAssemblyReferences.cache" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" afterPath="$PROJECT_DIR$/../MvcApplication1/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/bin/MvcApplication1.dll" afterPath="$PROJECT_DIR$/../MvcApplication1/bin/MvcApplication1.dll" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/obj/Debug/MvcApplication1.dll" afterPath="$PROJECT_DIR$/../MvcApplication1/obj/Debug/MvcApplication1.dll" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/bin/MvcApplication1.pdb" afterPath="$PROJECT_DIR$/../MvcApplication1/bin/MvcApplication1.pdb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/obj/Debug/MvcApplication1.pdb" afterPath="$PROJECT_DIR$/../MvcApplication1/obj/Debug/MvcApplication1.pdb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1.v11.suo" afterPath="$PROJECT_DIR$/../MvcApplication1.v11.suo" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Conf.py" afterPath="$PROJECT_DIR$/Conf.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/Views/Submit/Create.cshtml" afterPath="$PROJECT_DIR$/../MvcApplication1/Views/Submit/Create.cshtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/Models/DBModels.cs" afterPath="$PROJECT_DIR$/../MvcApplication1/Models/DBModels.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/Views/Problem/Details.cshtml" afterPath="$PROJECT_DIR$/../MvcApplication1/Views/Problem/Details.cshtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/Views/Submit/Details.cshtml" afterPath="$PROJECT_DIR$/../MvcApplication1/Views/Submit/Details.cshtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/Models/FormModels.cs" afterPath="$PROJECT_DIR$/../MvcApplication1/Models/FormModels.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/Controllers/HomeController.cs" afterPath="$PROJECT_DIR$/../MvcApplication1/Controllers/HomeController.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/Views/Submit/Index.cshtml" afterPath="$PROJECT_DIR$/../MvcApplication1/Views/Submit/Index.cshtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/Controllers/JudgeController.cs" afterPath="$PROJECT_DIR$/../MvcApplication1/Controllers/JudgeController.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/MvcApplication1.csproj" afterPath="$PROJECT_DIR$/../MvcApplication1/MvcApplication1.csproj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/Controllers/ProblemController.cs" afterPath="$PROJECT_DIR$/../MvcApplication1/Controllers/ProblemController.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/Controllers/SubmitController.cs" afterPath="$PROJECT_DIR$/../MvcApplication1/Controllers/SubmitController.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/Views/Problem/EditorTemplates/UploadProblemModel.cshtml" afterPath="$PROJECT_DIR$/../MvcApplication1/Views/Problem/EditorTemplates/UploadProblemModel.cshtml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../MvcApplication1/Web.config" afterPath="$PROJECT_DIR$/../MvcApplication1/Web.config" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Web.py" afterPath="$PROJECT_DIR$/Web.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Win_R.py" afterPath="$PROJECT_DIR$/Win_R.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Judge.iws" />
@@ -21,7 +93,7 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/Judge$Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1410602280196" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Judge$Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1410937513475" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -38,18 +110,16 @@
       <file leaf-file-name="main.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="203" column="0" selection-start="6050" selection-end="6050" vertical-scroll-proportion="5.8464" vertical-offset="0" max-vertical-offset="3798">
-              <folding>
-                <element signature="e#42#66#0" expanded="true" />
-              </folding>
+            <state line="196" column="0" selection-start="5932" selection-end="5932" vertical-scroll-proportion="0.43983403" vertical-offset="3172" max-vertical-offset="3654">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="utf_8.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://C:/Python27/Lib/encodings/utf_8.py">
+      <file leaf-file-name="decoder.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://C:/Python27/Lib/json/decoder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="0" selection-start="233" selection-end="233" vertical-scroll-proportion="0.0" vertical-offset="177" max-vertical-offset="912">
+            <state line="382" column="0" selection-start="13794" selection-end="13794" vertical-scroll-proportion="0.0" vertical-offset="6466" max-vertical-offset="6948">
               <folding />
             </state>
           </provider>
@@ -58,18 +128,7 @@
       <file leaf-file-name="Web.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Web.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="16" selection-start="323" selection-end="323" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="504">
-              <folding>
-                <element signature="e#43#54#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://C:/Python27/Lib/json/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="242" column="0" selection-start="9492" selection-end="9492" vertical-scroll-proportion="0.0" vertical-offset="4598" max-vertical-offset="6783">
+            <state line="7" column="32" selection-start="126" selection-end="135" vertical-scroll-proportion="0.0" vertical-offset="22" max-vertical-offset="504">
               <folding />
             </state>
           </provider>
@@ -78,29 +137,16 @@
       <file leaf-file-name="Win_R.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Win_R.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="0" selection-start="69" selection-end="69" vertical-scroll-proportion="0.0" vertical-offset="1548" max-vertical-offset="2160">
-              <folding>
-                <element signature="e#69#91#0" expanded="true" />
-              </folding>
+            <state line="62" column="0" selection-start="1971" selection-end="1971" vertical-scroll-proportion="0.0" vertical-offset="798" max-vertical-offset="1980">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Conf.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Conf.py">
+      <file leaf-file-name="__init__.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://C:/Python27/Lib/json/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="6" selection-start="491" selection-end="497" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="792">
-              <folding>
-                <element signature="e#42#51#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HashFile.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/HashFile.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="0" selection-start="15" selection-end="15" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="288">
+            <state line="337" column="0" selection-start="14231" selection-end="14231" vertical-scroll-proportion="0.0" vertical-offset="5867" max-vertical-offset="6408">
               <folding />
             </state>
           </provider>
@@ -122,17 +168,17 @@
         <option value="$PROJECT_DIR$/MD5.py" />
         <option value="$PROJECT_DIR$/HashFile.py" />
         <option value="$PROJECT_DIR$/Conf.py" />
-        <option value="$PROJECT_DIR$/Web.py" />
         <option value="$PROJECT_DIR$/Win_R.py" />
+        <option value="$PROJECT_DIR$/Web.py" />
         <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="75" />
+    <option name="x" value="65" />
     <option name="y" value="-8" />
-    <option name="width" value="1640" />
-    <option name="height" value="1083" />
+    <option name="width" value="1451" />
+    <option name="height" value="958" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -403,20 +449,20 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="75" y="-8" width="1640" height="1083" extended-state="6" />
+    <frame x="65" y="-8" width="1451" height="958" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32921812" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44155845" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295838" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21305418" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39932507" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15679443" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39905548" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295838" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293979" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -442,16 +488,124 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="19" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>101</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>196</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="24" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="168" column="45" selection-start="5267" selection-end="5267" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3798">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/encodings/utf_8.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="0" selection-start="233" selection-end="233" vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="864">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Web.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="0" selection-start="285" selection-end="285" vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="540">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/json/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="242" column="0" selection-start="9492" selection-end="9492" vertical-scroll-proportion="0.0" vertical-offset="4356" max-vertical-offset="6426">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Win_R.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="41" selection-start="1775" selection-end="1790" vertical-scroll-proportion="0.0" vertical-offset="1080" max-vertical-offset="2160">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Conf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="1" selection-start="371" selection-end="371" vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="792">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HashFile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="15" selection-end="15" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="288">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="203" column="0" selection-start="6050" selection-end="6050" vertical-scroll-proportion="0.0" vertical-offset="3654" max-vertical-offset="3798">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/encodings/utf_8.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="0" selection-start="233" selection-end="233" vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="864">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Web.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="16" selection-start="323" selection-end="323" vertical-scroll-proportion="0.0" vertical-offset="288" max-vertical-offset="504">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/json/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="242" column="0" selection-start="9492" selection-end="9492" vertical-scroll-proportion="0.0" vertical-offset="4356" max-vertical-offset="6426">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Win_R.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="0" selection-start="69" selection-end="69" vertical-scroll-proportion="0.0" vertical-offset="1548" max-vertical-offset="2160">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Conf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="6" selection-start="491" selection-end="497" vertical-scroll-proportion="0.0" vertical-offset="522" max-vertical-offset="792">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HashFile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="15" selection-end="15" vertical-scroll-proportion="0.0" vertical-offset="18" max-vertical-offset="288">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state line="215" column="0" selection-start="6497" selection-end="6497" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4313">
-          <folding>
-            <element signature="e#42#66#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -465,9 +619,7 @@
     <entry file="file://$PROJECT_DIR$/Web.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="35" selection-start="445" selection-end="445" vertical-scroll-proportion="0.0" vertical-offset="361" max-vertical-offset="551">
-          <folding>
-            <element signature="e#43#54#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -481,41 +633,13 @@
     <entry file="file://$PROJECT_DIR$/Win_R.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="35" column="12" selection-start="732" selection-end="732" vertical-scroll-proportion="0.0" vertical-offset="482" max-vertical-offset="2128">
-          <folding>
-            <element signature="e#69#91#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/.PyCharm30/system/python_stubs/-762174762/__builtin__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="37" column="35" selection-start="1263" selection-end="1263" vertical-scroll-proportion="0.6331361" vertical-offset="382" max-vertical-offset="97869">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Python27/Lib/site-packages/requests/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="554" column="0" selection-start="16340" selection-end="16340" vertical-scroll-proportion="0.33333334" vertical-offset="10015" max-vertical-offset="12559" />
-      </provider>
-    </entry>
-    <entry file="file://C:/Python27/Lib/site-packages/requests/sessions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="272" column="0" selection-start="9294" selection-end="9294" vertical-scroll-proportion="0.33333334" vertical-offset="4581" max-vertical-offset="11799">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Python27/Lib/site-packages/requests/api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="0" selection-start="1838" selection-end="1838" vertical-scroll-proportion="0.33333334" vertical-offset="629" max-vertical-offset="2394">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Python27/Lib/json/decoder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="382" column="0" selection-start="13794" selection-end="13794" vertical-scroll-proportion="0.7001972" vertical-offset="6827" max-vertical-offset="7334">
           <folding />
         </state>
       </provider>
@@ -537,13 +661,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Python27/Lib/json/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="242" column="0" selection-start="9492" selection-end="9492" vertical-scroll-proportion="0.0" vertical-offset="4410" max-vertical-offset="6764">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/HashFile.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="0" selection-start="15" selection-end="15" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="288">
@@ -551,39 +668,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Web.py">
+    <entry file="file://C:/Python27/Lib/site-packages/requests/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="16" selection-start="323" selection-end="323" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="504">
-          <folding>
-            <element signature="e#43#54#0" expanded="true" />
-          </folding>
+        <state line="556" column="0" selection-start="16443" selection-end="16443" vertical-scroll-proportion="0.0" vertical-offset="9524" max-vertical-offset="11898">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Win_R.py">
+    <entry file="file://C:/Python27/Lib/site-packages/requests/api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="69" selection-end="69" vertical-scroll-proportion="0.0" vertical-offset="1548" max-vertical-offset="2160">
-          <folding>
-            <element signature="e#69#91#0" expanded="true" />
-          </folding>
+        <state line="43" column="0" selection-start="1871" selection-end="1871" vertical-scroll-proportion="0.0" vertical-offset="614" max-vertical-offset="2268">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Conf.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="6" selection-start="491" selection-end="497" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="792">
-          <folding>
-            <element signature="e#42#51#0" expanded="true" />
-          </folding>
+        <state line="6" column="35" selection-start="84" selection-end="106" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="774">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/requests/sessions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="457" column="0" selection-start="15937" selection-end="15937" vertical-scroll-proportion="1.0041494" vertical-offset="7346" max-vertical-offset="11178">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/json/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="337" column="0" selection-start="14231" selection-end="14231" vertical-scroll-proportion="0.0" vertical-offset="5867" max-vertical-offset="6408">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/json/decoder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="382" column="0" selection-start="13794" selection-end="13794" vertical-scroll-proportion="0.0" vertical-offset="6466" max-vertical-offset="6948">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Win_R.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="0" selection-start="1971" selection-end="1971" vertical-scroll-proportion="0.0" vertical-offset="798" max-vertical-offset="1980">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Web.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="32" selection-start="126" selection-end="135" vertical-scroll-proportion="0.0" vertical-offset="22" max-vertical-offset="504">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="203" column="0" selection-start="6050" selection-end="6050" vertical-scroll-proportion="5.8464" vertical-offset="0" max-vertical-offset="3798">
-          <folding>
-            <element signature="e#42#66#0" expanded="true" />
-          </folding>
+        <state line="196" column="0" selection-start="5932" selection-end="5932" vertical-scroll-proportion="0.43983403" vertical-offset="3172" max-vertical-offset="3654">
+          <folding />
         </state>
       </provider>
     </entry>

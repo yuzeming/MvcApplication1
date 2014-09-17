@@ -1,0 +1,23 @@
+﻿@model MvcApplication1.FormModels.ContestFormModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    <div class="col-md-6">
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.EditorForModel();
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

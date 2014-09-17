@@ -18,6 +18,7 @@ namespace MvcApplication1.Models
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Problem> Problems { set; get; }
         public DbSet<Submit> Submits { get; set; }
+        public DbSet<Contest> Contests { get; set; }
     }
 
     public class UserIntializer : DropCreateDatabaseIfModelChanges<MyDbContext>
@@ -60,18 +61,18 @@ namespace MvcApplication1.Models
 
     public enum SubmitState
     {
-        Waiting,
-        Running,
+        Waiting = 999,
+        Running = 1000,
 
-        Accepted,
-        TimeLimitExceeded,
-        MemoryLimitExceeded,
-        WrongAnswer,
-        RuntimeError,
-        OutputLimitExceeded,
-        CompileError,
-        SystemError,
-        ValidatorError,
+        Accepted = 0,
+        TimeLimitExceeded = 2,
+        MemoryLimitExceeded = 3,
+        WrongAnswer = 4,
+        RuntimeError = 5,
+        OutputLimitExceeded = 6,
+        CompileError = 7,
+        SystemError = 100,
+        ValidatorError = 101,
     }
 
     public class Submit
@@ -97,6 +98,25 @@ namespace MvcApplication1.Models
         public int Score { get; set; }
         public string Result { get; set; } //Json
         public string CompilerRes { get; set; }
+        public virtual Contest Belog { get; set; }
+    }
+
+    public class Contest
+    {
+        [Key]
+        public int ID { get; set; }
+
+        public string Title { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+
+        public bool Public { get; set; }
+
+        public virtual ICollection<UserProfile> UserList { get; set; }
+        public virtual ICollection<Problem> ProbList { get; set; }
+
+        public string Result { get; set; } // JSON
+        public bool Update { get; set; }  // 惰性更新结果数据
     }
 
     public class JsonConfig

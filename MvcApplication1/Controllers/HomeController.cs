@@ -7,6 +7,7 @@ using MvcApplication1.Filters;
 
 namespace MvcApplication1.Controllers
 {
+    [Authorize]
     [InitializeSimpleMembership]
     public class HomeController : Controller
     {

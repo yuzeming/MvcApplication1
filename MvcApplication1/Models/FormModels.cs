@@ -95,4 +95,33 @@ namespace MvcApplication1.FormModels
         public string User { get; set; }
         public SubmitState? State { get; set; }
     }
+
+    public class ContestFormModel
+    {
+        [Required]
+        [Display(Name = "比赛名称")]
+        public string Title { get; set; }
+        [Required]
+        [Display(Name = "开始时间")]
+        public DateTime Start { get; set; }
+        [Required]
+        [Display(Name = "结束时间")]
+        public DateTime End { get; set; }
+
+        [Display(Name = "公开")]
+        public bool Public { get; set; }
+
+        [Display(Name = "题目列表")]
+        public string ProbStr { get; set; }
+
+        [Display(Name = "用户列表")]
+        public string UserStr { get; set; }
+    }
+
+    public class JsonContestReslut
+    {
+        public int Src { get; set; }
+        public string UserName { get; set; }
+        public List<String> Details { get; set; }
+    }
 }

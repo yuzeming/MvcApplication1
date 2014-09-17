@@ -13,6 +13,7 @@ using MvcApplication1.Models;
 
 namespace MvcApplication1.Controllers
 {
+    [Authorize]
     public class SubmitApiModels
     {
         public int ID { get; set; }
@@ -34,6 +35,16 @@ namespace MvcApplication1.Controllers
     public class JudgeController : ApiController
     {
         private MyDbContext db = new MyDbContext();
+        
+        [NonAction]
+        public void SetUpdate(Contest c)
+        {
+            if (c != null)
+            {
+                c.Update = true;
+                db.Entry(c).State = EntityState.Modified;
+            }
+        }
 
         public SubmitApiModels Get()
         {
@@ -41,8 +52,8 @@ namespace MvcApplication1.Controllers
             var tmp = db.Submits.FirstOrDefault(m => m.State == SubmitState.Waiting);
             if (tmp == null)
                 return null;
-            // For Debug
-            //  tmp.State = SubmitState.Running;
+            tmp.State = SubmitState.Running;
+            SetUpdate(tmp.Belog);
             db.Entry(tmp).State = EntityState.Modified;
             db.SaveChanges();
             var ret = Mapper.Map<SubmitApiModels>(tmp);
@@ -58,6 +69,7 @@ namespace MvcApplication1.Controllers
             tmp.Score = submit.Score;
             tmp.State = submit.State;
             tmp.CompilerRes = submit.CompilerRes;
+            SetUpdate(tmp.Belog);
             db.Entry(tmp).State = EntityState.Modified;
             db.SaveChanges();
             return new HttpResponseMessage(HttpStatusCode.OK); ;

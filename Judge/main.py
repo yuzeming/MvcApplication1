@@ -32,7 +32,7 @@ def Split(s):
     '''
     按空格拆分参数，暂时不能处理双引号
     '''
-    if type(s) == types.StringType:
+    if type(s) == types.StringType or type(s) == types.UnicodeType:
         return s.split(" ")
     else:
         return copy.deepcopy(s)
@@ -154,7 +154,7 @@ def Judge(s):
                     Replace(tmpCC, {"$(IN)": Input, "$(OUT)": OutputFileName, "$(ANS)": Output, })
                     pp = CreatePipe()  # (read_end,write_end)
                     CRet = Exec(tmpCC, pp=[None, pp[1], None])
-                    CRes = Decode(ReadPipe(pp),["gbk","uft-8","gb2112"])
+                    CRes = Decode(ReadPipe(pp),["gbk","utf-8"])
                     DataRes[0:2] = [0, u"ValidatorError"]
                     if CRet[0]:
                         tmpList = CRes.split(" ", 1)
@@ -165,8 +165,8 @@ def Judge(s):
                             if tmpList[0] == 1:
                                 DataRes[1] =DataRes[1] or u"Accepted"
                             else:
-                                DataRes[1] =DataRes[1] or u"WrongAnswer"
-                                FirstError = u"WrongAnswer"
+                                DataRes[1] = DataRes[1] or u"WrongAnswer"
+                                FirstError = FirstError or u"WrongAnswer"
                     #Clean up
                 DelFile(OutputFileName)
             if (not FirstError and DataRes[1] != u"Accepted"):

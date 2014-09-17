@@ -19,7 +19,7 @@ using AutoMapper;
 
 namespace MvcApplication1.Controllers
 {
-    //[InitializeSimpleMembership]
+    [Authorize]
     public class ProblemController : Controller
     {
         private MyDbContext db = new MyDbContext();
@@ -35,13 +35,14 @@ namespace MvcApplication1.Controllers
             return View(db.Problems.ToList());
         }
 
-        public ActionResult Details(int id = 0)
+        public ActionResult Details(int id = 0,int? c = null)
         {
             Problem problem = db.Problems.Find(id);
             if (problem == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.c = c;
             return View(problem);
         }
 
@@ -114,6 +115,7 @@ namespace MvcApplication1.Controllers
             return View(form);
         }
 
+        
         public ActionResult Delete(int id = 0)
         {
             Problem problem = db.Problems.Find(id);
@@ -135,6 +137,7 @@ namespace MvcApplication1.Controllers
             return RedirectToAction("Index");
         }
 
+        [AllowAnonymous]
         public ActionResult Downland(int id)
         {
             Problem problem = db.Problems.Find(id);

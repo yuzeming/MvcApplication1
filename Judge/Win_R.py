@@ -54,14 +54,13 @@ def Exec(argv, limit=None, pp=None, RootDir=None):
     #pi  (hProcess, hThread, dwProcessId, dwThreadId)
     win32process.ResumeThread(pi[1])  #hThread
     win32api.CloseHandle(pi[1])
-
     while True:
         exitCode = win32process.GetExitCodeProcess(pi[0])
         pmc = win32process.GetProcessMemoryInfo(pi[0])
         ft = win32process.GetProcessTimes(pi[0])
         ret[3] = mem = round(float(pmc["PeakPagefileUsage"]) / 1024 / 1024, 2)
         ret[2] = time = round(float(ft["UserTime"]) / WIN32_PROCESS_TIMES_TICKS_PER_SECOND, 2)
-        print exitCode, ret
+        print cmd, exitCode, ret
         if limit is not None and time > float(limit[0]):
             ret[1] = u"TimeLimitExceeded"
             CloseProcess(pi)

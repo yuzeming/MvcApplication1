@@ -9,7 +9,13 @@
 <table class="table table-striped">
     <tr>
         <td>用户名：@Model.User.UserName</td>
-        <td>题目：@Model.Prob.Title</td>
+        <td>
+            题目：@Model.Prob.Title
+            @if (Model.Belog != null)
+            {
+                <span>(@Model.Belog.Title)</span>
+            }
+        </td>
         <td>提交ID：@Model.ID</td>
         <td colspan="2" title="@Model.CompilerRes">状态：@Model.State</td>
     </tr>
@@ -49,7 +55,6 @@
 
 <h3>源代码</h3>
 <pre><code>@Model.Source</code></pre>
-
 
 <h3>编译器输出</h3>
 <pre>@Model.CompilerRes</pre>

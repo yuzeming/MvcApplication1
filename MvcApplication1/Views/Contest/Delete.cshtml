@@ -1,0 +1,21 @@
+﻿@model MvcApplication1.Models.Contest
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>确认删除这场比赛？</h3>
+
+<div class="well">
+   ( @Html.DisplayFor(model => model.ID) ) 
+    @Html.DisplayFor(model => model.Title)
+</div>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" class="btn btn-danger"/>
+    </p>
+}

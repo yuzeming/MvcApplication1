@@ -196,6 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ContestController.cs" />
     <Compile Include="Controllers\JudgeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProblemController.cs" />
@@ -206,6 +207,7 @@
     </Compile>
     <Compile Include="Models\FormModels.cs" />
     <Compile Include="Models\DBModels.cs" />
+    <Compile Include="mydb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -311,6 +313,13 @@
     <Content Include="Views\Submit\Create.cshtml" />
     <Content Include="Views\Submit\Delete.cshtml" />
     <Content Include="Views\Shared\_Pagination.cshtml" />
+    <Content Include="Views\Contest\Index.cshtml" />
+    <Content Include="Views\Contest\Details.cshtml" />
+    <Content Include="Views\Contest\Create.cshtml" />
+    <Content Include="Views\Contest\Edit.cshtml" />
+    <Content Include="Views\Contest\Delete.cshtml" />
+    <Content Include="Views\Contest\EditorTemplates\ContestFormModel.cshtml" />
+    <Content Include="Views\Contest\Rank.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<MvcApplication1.Models.Contest>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<h2>比赛列表</h2>
+<table class="table table-striped">
+    <tr>
+        <th>#</th>
+        <th>比赛名称</th>
+        <th>比赛时间</th>
+        <th>操作</th>
+    </tr>
+    @foreach (var i in Model)
+    {
+        <tr>
+            <td>@i.ID</td>
+            <td>@i.Title</td>
+            <td>@i.Start ~ @i.End</td>
+            <td>
+                @Html.ActionLink("进入","Details",new { id =i.ID })| 
+                @Html.ActionLink("排名","Rank",new { id =i.ID })|
+                @Html.ActionLink("删除","Delete",new { id =i.ID }) |
+                @Html.ActionLink("编辑","Edit",new { id =i.ID })
+                
+            </td>
+        </tr>
+    }
+</table>

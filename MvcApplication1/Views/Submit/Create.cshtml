@@ -13,14 +13,19 @@
         <div class="form-group col-md-6">
             @Html.LabelFor(model => model.Lang)
             <select name="Lang" class="form-control">
-                <option value="cpp">C++</option>
-                <option value="java">Java</option>
+                <option value="cpp" selected="selected">C++</option>
             </select>
         </div>
     
         <div class="form-group col-md-6">
             <label>题目</label>
-            <p class="form-control-static">@ViewBag.ProbTitle</p>
+            <p class="form-control-static">
+                @ViewBag.ProbTitle
+                @if (ViewBag.ContTitle !=null)
+                {
+                    <span>这份代码将提交到比赛 @ViewBag.ContTitle</span>
+                }
+            </p>
             
         </div>
     </div>
@@ -29,7 +34,6 @@
         @Html.ValidationMessageFor(model => model.Src)
         @Html.TextAreaFor(model => model.Src,new {@class ="form-control",@id="SrcEdit",@rows=30})
     </div>
-
     <p>
         <input type="submit" value="Create" class="btn btn-default" />
     </p>
