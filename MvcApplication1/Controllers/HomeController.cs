@@ -16,7 +16,8 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.c = db.Contests.Where(x => x.Start < DateTime.Now && x.End > DateTime.Now && x.UserList.Any(z => z.UserName == User.Identity.Name)).ToList();
+            ViewBag.c = db.Contests.Where(x => x.Start < DateTime.Now && x.End > DateTime.Now 
+                && x.UserList.Any(z => z.UserName == User.Identity.Name)).ToList();
             return View();
         }
     }

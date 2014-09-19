@@ -251,6 +251,7 @@
     <Content Include="Views\Contest\Delete.cshtml" />
     <Content Include="Views\Contest\EditorTemplates\ContestFormModel.cshtml" />
     <Content Include="Views\Contest\Rank.cshtml" />
+    <Content Include="Views\Account\UserImport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

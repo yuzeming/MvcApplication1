@@ -94,6 +94,44 @@ namespace MvcApplication1.Controllers
             return View(model);
         }
 
+        [Authorize(Users="root")]
+        public ActionResult UserImport()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Users = "root")]
+        public ActionResult UserImport(String import)
+        {
+            String Res = "";
+            String ximport = "";
+            foreach (String x in import.Split( new char[] {'\n'}))
+            {
+                String[] y = x.Split(new char[] { ',' }, 2);
+                if (y.Length == 2)
+                    try
+                    {
+                        WebSecurity.CreateUserAndAccount(y[0], y[1]);
+                        Res += "成功创建账户:" + y[0] + "\n";
+                    }
+                    catch (MembershipCreateUserException e)
+                    {
+                        Res += "创建账户失败:" + y[0] + ErrorCodeToString(e.StatusCode) + "\n";
+                        ximport += x + "\n";
+                    }
+                else
+                {
+                    Res += "无法解析该行:" + x +"\n";
+                    ximport += x + "\n";
+                }
+            }
+            ViewBag.Res = Res;
+            ViewBag.Import = ximport;
+            return View();
+        }
+
         #region 帮助程序
         private ActionResult RedirectToLocal(string returnUrl)
         {

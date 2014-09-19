@@ -126,7 +126,7 @@ namespace MvcApplication1.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Rank(int id)
+        public ActionResult Rank(int id,string type="html")
         {
             var contest = db.Contests.Find(id);
             if (contest == null)
@@ -150,7 +150,11 @@ namespace MvcApplication1.Controllers
             ViewBag.prob = contest.ProbList.OrderBy( x => x.ID).ToList();
             ViewBag.C = id;
             ViewBag.CTitle = contest.Title;
-            return View(res);
+            if (type == "html")
+                return View(res);
+            //if (type="cvs")
+            //    return 
+            return HttpNotFound();
         }
 
         protected override void Dispose(bool disposing)
