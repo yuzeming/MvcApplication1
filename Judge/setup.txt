@@ -1,0 +1,2 @@
+net user judge judge /add
+JudgeServer.py --username .\judge --password judge --startup auto install
