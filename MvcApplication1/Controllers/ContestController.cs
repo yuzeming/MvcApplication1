@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -18,12 +19,10 @@ namespace MvcApplication1.Controllers
 
         public ContestController()
         {
-            Mapper.CreateMap<ContestFormModel, Contest>()
-                .ForMember( m => m.ProbList, s => s.MapFrom( x => GetProbList(x)))
-                .ForMember( m => m.UserList, s => s.MapFrom( x => GetUserList(x)));
+            Mapper.CreateMap<ContestFormModel, Contest>();
             Mapper.CreateMap<Contest, ContestFormModel>()
-                .ForMember(m => m.ProbStr, s => s.MapFrom(x => GetProbStr(x)))
-                .ForMember(m => m.UserStr, s => s.MapFrom(x => GetUserStr(x)));
+                .ForMember(x => x.ProbStr, s => s.MapFrom(z =>GetProbStr(z)))
+                .ForMember(x => x.UserStr, s => s.MapFrom(z =>GetUserStr(z)));
         }
 
         public ActionResult Index()
@@ -34,13 +33,16 @@ namespace MvcApplication1.Controllers
         public ActionResult Details(int id = 0)
         {
             Contest contest = db.Contests.Find(id);
+            if (!contest.UserList.Any(x => x.UserName == User.Identity.Name))
+                return View("Error", new HttpException(403, "您没有参与这场比赛。"));
+            if (contest.State == ContestState.Before)
+                return View("Error",new HttpException(403,"比赛还没有开始"));
             if (contest == null)
-            {
                 return HttpNotFound();
-            }
             return View(contest);
         }
 
+        [AuthorizeAttribute(Users = "root")]
         public ActionResult Create()
         {
             return View(new ContestFormModel());
@@ -48,11 +50,10 @@ namespace MvcApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeAttribute(Users = "root")]
         public ActionResult Create(ContestFormModel form)
         {
-            var tmp = Mapper.Map<Contest>(form);
-            if (tmp.Start > tmp.End)
-                ModelState.AddModelError("Start", "开始时间不能晚于结束时间");
+            var tmp = toContest(form);
             if (ModelState.IsValid)
             {
                 db.Contests.Add(tmp);
@@ -63,6 +64,7 @@ namespace MvcApplication1.Controllers
             return View(form);
         }
 
+        [AuthorizeAttribute(Users = "root")]
         public ActionResult Edit(int id = 0)
         {
             Contest contest = db.Contests.Find(id);
@@ -75,21 +77,34 @@ namespace MvcApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeAttribute(Users = "root")]
         public ActionResult Edit(int id,ContestFormModel form)
         {
-            var tmp = Mapper.Map<Contest>(form);
-            if (tmp.Start > tmp.End)
-                ModelState.AddModelError("Start", "开始时间不能晚于结束时间");
-            tmp.ID = id;
+            var tmp = db.Contests.Find(id);
+            tmp.Title = form.Title;
+            tmp.End = form.End;
+            tmp.Start = form.Start;
+            tmp.Public = form.Public;
+
+            tmp.ProbList.Clear();
+            foreach (var p in GetProbList(form))
+                tmp.ProbList.Add(p);
+
+            tmp.UserList.Clear();
+            foreach (var p in GetUserList(form))
+                tmp.UserList.Add(p);
+
+            tmp.Update = true;
             if (ModelState.IsValid)
             {
-                db.Entry(tmp).State = EntityState.Modified;
+                db.Contests.AddOrUpdate(tmp);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(form);
         }
 
+        [AuthorizeAttribute(Users = "root")]
         public ActionResult Delete(int id = 0)
         {
             Contest contest = db.Contests.Find(id);
@@ -101,6 +116,7 @@ namespace MvcApplication1.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [AuthorizeAttribute(Users = "root")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
@@ -110,7 +126,60 @@ namespace MvcApplication1.Controllers
             return RedirectToAction("Index");
         }
 
-        public List<JsonContestReslut> GetReslutList(Contest cont,List<Problem> prob =null, List<UserProfile> user=null)
+        public ActionResult Rank(int id)
+        {
+            var contest = db.Contests.Find(id);
+            if (contest == null)
+                return HttpNotFound();
+
+            if (!contest.UserList.Any(x => x.UserName == User.Identity.Name))
+                return View("Error", new HttpException(403, "您没有参与这场比赛。"));
+            if (contest.State == ContestState.Before)
+                return View("Error", new HttpException(403, "比赛还没有开始"));
+            List<JsonContestReslut> res;
+            if (contest.Update || String.IsNullOrWhiteSpace(contest.Result))
+            {
+                res = GetReslutList(contest);
+                contest.Result = JsonConvert.SerializeObject(res);
+                contest.Update = false;
+                db.Entry(contest).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            else
+                res = JsonConvert.DeserializeObject<List<JsonContestReslut>>(contest.Result);
+            ViewBag.prob = contest.ProbList.OrderBy( x => x.ID).ToList();
+            ViewBag.C = id;
+            ViewBag.CTitle = contest.Title;
+            return View(res);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
+        }
+
+
+        #region 帮助程序
+
+        public Contest toContest(ContestFormModel form)
+        {
+            var tmp = new Contest();
+            tmp.Title = form.Title;
+            tmp.Start = form.Start;
+            tmp.End = form.End;
+            tmp.Public = form.Public;
+            tmp.ProbList = GetProbList(form);
+            tmp.UserList = GetUserList(form);
+            if (tmp.Start > tmp.End)
+                ModelState.AddModelError("Start", "开始时间不能晚于结束时间");
+
+            return tmp;
+        }
+
+
+        [NonAction]
+        public List<JsonContestReslut> GetReslutList(Contest cont, List<Problem> prob = null, List<UserProfile> user = null)
         {
             var ret = new List<JsonContestReslut>();
             var q = db.Submits.AsQueryable();
@@ -118,9 +187,9 @@ namespace MvcApplication1.Controllers
             {
                 q.Where(x => x.Belog == cont);
                 if (prob == null)
-                    prob = cont.ProbList.ToList();
+                    prob = cont.ProbList.OrderBy( x => x.ID).ToList();
                 if (user == null)
-                    user = cont.UserList.ToList();
+                    user = cont.UserList.OrderBy(x => x.UserId).ToList();
             }
             foreach (var u in user)
             {
@@ -130,7 +199,7 @@ namespace MvcApplication1.Controllers
                 {
                     var qp = qu.Where(x => x.Prob.ID == p.ID).OrderByDescending(x => x.ID).OrderBy(x => x.State).FirstOrDefault();
                     if (qp == null)
-                        tmp.Details.Add("None");
+                        tmp.Details.Add("(未提交)");
                     else
                     {
                         if (qp.State == SubmitState.Running || qp.State == SubmitState.Waiting)
@@ -147,34 +216,6 @@ namespace MvcApplication1.Controllers
             return ret;
         }
 
-        public ActionResult Rank(int id)
-        {
-            var contest = db.Contests.Find(id);
-            if (contest == null)
-                return HttpNotFound();
-            List<JsonContestReslut> res;
-            if (contest.Update || String.IsNullOrWhiteSpace(contest.Result))
-            {
-                res = GetReslutList(contest);
-                contest.Result = JsonConvert.SerializeObject(res);
-                contest.Update = false;
-                db.Entry(contest).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            else
-                res = JsonConvert.DeserializeObject<List<JsonContestReslut>>(contest.Result);
-            ViewBag.prob = contest.ProbList;
-            return View(res);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
-        }
-
-
-        #region 帮助程序
         public List<UserProfile> GetUserList(ContestFormModel x)
         {
             if (String.IsNullOrWhiteSpace(x.UserStr))

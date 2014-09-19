@@ -2,13 +2,18 @@
 @using MvcApplication1.Models
 @{
     ViewBag.Title = "Index";
+    bool isRoot = User.Identity.Name == "root";
 }
 
 <h2>Index</h2>
 
+@if (isRoot)
+{
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+}
+
 <table class="table table-striped">
     <tr>
         <th>#</th>
@@ -37,10 +42,16 @@
             @src
         </td>
         <td>
-            @Html.ActionLink("Submit", "Create","Submit", new { id=item.ID },null) |
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID }) |
-            @Html.ActionLink("Downland", "Downland", new { id=item.ID })
+            @Html.ActionLink("Submit", "Create","Submit", new { id=item.ID },null)
+            @if (isRoot)
+            {
+                @Html.ActionLink("Edit", "Edit", new { id=item.ID })
+                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            }
+            @if (item.PublicData || isRoot)
+            {
+                @Html.ActionLink("Downland", "Downland", new { id=item.ID })
+            }
         </td>
     </tr>
 }

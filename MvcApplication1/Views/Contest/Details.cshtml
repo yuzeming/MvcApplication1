@@ -6,7 +6,7 @@
 
 <h2>@Html.DisplayFor(model => model.Title)</h2>
         
-<span>@Html.DisplayFor(model => model.Start) ~ @Html.DisplayFor(model => model.End)</span> 
+<span>比赛时间 @Html.DisplayFor(model => model.Start) ~ @Html.DisplayFor(model => model.End)</span> 
 
 <table class="table">
     <tr>
@@ -23,6 +23,4 @@
         </tr>
     }
 </table>  
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
-</p>
+

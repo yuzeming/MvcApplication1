@@ -2,6 +2,7 @@
 @using MvcApplication1.Models
 @{
     ViewBag.Title = "Index";
+    bool isRoot = User.Identity.Name == "root";
 }
 
 <h2>Index</h2>
@@ -9,12 +10,20 @@
 @Html.Partial("_Pagination")
 
 <form class="form-inline" role="form">
+
     <div class="form-group">
-        @Html.TextBoxFor( m => m.PID,new {@class="form-control",placeholder="题目ID" })
+        @Html.TextBoxFor( m => m.S,new {@class="form-control",placeholder="记录ID" })
     </div>
     <div class="form-group">
-        @Html.TextBoxFor( m => m.User,new {@class="form-control",placeholder="用户名" })
+        @Html.TextBoxFor( m => m.C,new {@class="form-control",placeholder="比赛ID" })
     </div>
+    <div class="form-group">
+        @Html.TextBoxFor( m => m.P,new {@class="form-control",placeholder="题目ID" })
+    </div>
+    <div class="form-group">
+        @Html.TextBoxFor( m => m.U,new {@class="form-control",placeholder="用户名" })
+    </div>
+
     <div class="form-group">
         @Html.DropDownList("State",(List<SelectListItem>) ViewBag.StateList,new {@class="form-control"})
     </div>
@@ -84,16 +93,19 @@
 }
 
 </table>
-@if (ViewBag.isSearch)
+@if (isRoot)
 {
-    <form class="form-inline" role="form" method="post">
-        @Html.AntiForgeryToken()
-        <input type="hidden" name="Rejudge" value="REJDGE" />
-        <button type="submit" class="btn btn-danger" >重新评测</button>
-    </form>
-}
-else
-{
-    <button class="btn btn-danger" disabled="disabled">重新评测</button>
-    <span class="helpblock">请先确定搜索范围。</span>
+    if (ViewBag.isSearch)
+    {
+        <form class="form-inline" role="form" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="Rejudge" value="REJDGE" />
+            <button type="submit" class="btn btn-danger" >重新评测</button>
+        </form>
+    }
+    else
+    {
+        <button class="btn btn-danger" disabled="disabled">重新评测</button>
+        <span class="helpblock">请先确定搜索范围。</span>
+    }
 }

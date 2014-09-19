@@ -101,6 +101,16 @@ namespace MvcApplication1.Models
         public virtual Contest Belog { get; set; }
     }
 
+    public enum ContestState 
+    {
+        [Display(Name="未开始")]
+        Before,
+        [Display(Name="正在进行")]
+        Running,
+        [Display(Name="已结束")]
+        Past,
+    }
+
     public class Contest
     {
         [Key]
@@ -117,6 +127,18 @@ namespace MvcApplication1.Models
 
         public string Result { get; set; } // JSON
         public bool Update { get; set; }  // 惰性更新结果数据
+
+        public ContestState State
+        {
+            get
+            {
+                if (DateTime.Now < Start)
+                    return ContestState.Before;
+                if (DateTime.Now > End)
+                    return ContestState.Past;
+                return ContestState.Running;
+            }
+        }
     }
 
     public class JsonConfig

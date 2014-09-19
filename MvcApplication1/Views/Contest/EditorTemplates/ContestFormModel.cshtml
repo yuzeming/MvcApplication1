@@ -17,13 +17,13 @@
 
 <div class="form-group">
     @Html.LabelFor(Model => Model.Start)
-    @Html.TextBoxFor(model => model.Start, new { @class = "form-control" ,@type = "datetime-local" })
+    @Html.TextBoxFor(model => model.Start, new { @class = "form-control" })
     @Html.ValidationMessageFor(model => model.Start)
 </div>
 
 <div class="form-group">
     @Html.LabelFor(Model => Model.End)
-    @Html.TextBoxFor(model => model.End, new { @class = "form-control" ,@type = "datetime-local" })
+    @Html.TextBoxFor(model => model.End, new { @class = "form-control"})
     @Html.ValidationMessageFor(model => model.End)
 </div>
 

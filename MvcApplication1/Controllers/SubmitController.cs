@@ -32,10 +32,15 @@ namespace MvcApplication1.Controllers
 
         public IQueryable<Submit> Search(IQueryable<Submit> query, SubmitSearchModel search)
         {
-            if (search.PID != null)
-                query = query.Where(m => m.Prob.ID == search.PID);
-            if (!String.IsNullOrWhiteSpace(search.User))
-                query = query.Where(m => m.User.UserName == search.User);
+            if (search.S != null)
+                query = query.Where(m => m.ID == search.S);
+            if (search.C != null)
+                query = query.Where(m => m.Belog.ID == search.C);
+            if (search.P != null)
+                query = query.Where(m => m.Prob.ID == search.P);
+
+            if (!String.IsNullOrWhiteSpace(search.U))
+                query = query.Where(m => m.User.UserName == search.U);
             if (search.State != null)
                 query = query.Where(m => m.State == search.State);
             return query;
@@ -43,7 +48,7 @@ namespace MvcApplication1.Controllers
 
         public bool isSearch(SubmitSearchModel search)
         {
-            return search.PID != null || !String.IsNullOrWhiteSpace(search.User) || search.State!=null;
+            return search.P != null || search.S != null || search.C != null || !String.IsNullOrWhiteSpace(search.U) || search.State != null;
         }
 
         public List<SelectListItem> GetSelectListItem(SubmitSearchModel search)
@@ -69,6 +74,7 @@ namespace MvcApplication1.Controllers
 
         [HttpPost, ActionName("Index")]
         [ValidateAntiForgeryToken]
+        [AuthorizeAttribute(Users = "root")]
         public ActionResult IndexPost(SubmitSearchModel search) 
         {
             var query = Search(db.Submits,search);
@@ -103,11 +109,19 @@ namespace MvcApplication1.Controllers
             var tmp = db.Problems.Find(id);
             if (tmp == null)
                 return HttpNotFound();
-            ViewBag.ProbTitle =tmp.Title;
+            ViewBag.ProbTitle = tmp.Title;
             if (c!=0)
             {
-                ViewBag.ContTitle = db.Contests.Find(c).Title;
+                var contest = db.Contests.Find(c);
+                if (contest == null)
+                    return View("Error", new HttpException(403, "没有找到比赛"));
+                if (contest.State != ContestState.Running)
+                    return View("Error", new HttpException(403, "比赛已经结束或尚未开始。"));
+                if (!contest.UserList.Any(x => x.UserName == User.Identity.Name))
+                    return View("Error", new HttpException(403, "您没有参与这场比赛。"));
+                ViewBag.ContTitle = contest.Title;
             }
+
             return View(new SubmitModel());
         }
 
@@ -162,7 +176,10 @@ namespace MvcApplication1.Controllers
             db.Dispose();
             base.Dispose(disposing);
         }
-        
+
+        #region 帮助程序
+
+        [NonAction]
         public Submit CreateSubmit(Problem prob,SubmitModel x)
         {
             var ret = new Submit();
@@ -185,5 +202,7 @@ namespace MvcApplication1.Controllers
             ViewBag.page = page; ViewBag.totpage = totpage;  //数据传递给ViewBag
             return tmp.Skip((page - 1) * PAGE_SIZE).Take(PAGE_SIZE);
         }
+
+        #endregion
     }
 }

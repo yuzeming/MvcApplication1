@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Details";
+    bool isRoot = User.Identity.Name == "root";
+    bool ShowSrc = isRoot || Model.User.UserName == User.Identity.Name;
 }
 
 <h2>Details</h2>
@@ -53,8 +55,11 @@
 
 </table>
 
-<h3>源代码</h3>
-<pre><code>@Model.Source</code></pre>
+@if (ShowSrc)
+{
+    <h3>源代码</h3>
+    <pre><code>@Model.Source</code></pre>
 
-<h3>编译器输出</h3>
-<pre>@Model.CompilerRes</pre>
+    <h3>编译器输出</h3>
+    <pre>@Model.CompilerRes</pre>
+}

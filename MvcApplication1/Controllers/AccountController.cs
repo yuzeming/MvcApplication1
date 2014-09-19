@@ -87,7 +87,6 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Manage(LocalPasswordModel model)
         {
-
             ViewBag.ReturnUrl = Url.Action("Manage");
             if (ModelState.IsValid && WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword))
                return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });

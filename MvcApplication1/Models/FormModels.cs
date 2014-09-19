@@ -91,8 +91,10 @@ namespace MvcApplication1.FormModels
 
     public class SubmitSearchModel
     {
-        public int? PID { get; set; }
-        public string User { get; set; }
+        public int? S { get; set; }
+        public int? C { get; set; }
+        public int? P { get; set; }
+        public string U { get; set; }
         public SubmitState? State { get; set; }
     }
 

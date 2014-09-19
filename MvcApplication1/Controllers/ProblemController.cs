@@ -32,21 +32,37 @@ namespace MvcApplication1.Controllers
                 .ToList()
                 .ToDictionary(y => y.Prob.ID);
             ViewBag.Record = tmp;
-            return View(db.Problems.ToList());
+            var query = db.Problems.AsQueryable();
+            if (User.Identity.Name != "root")
+                query = query.Where(x => x.Public);
+            return View(query.ToList());
         }
 
-        public ActionResult Details(int id = 0,int? c = null)
+        public ActionResult Details(int id = 0,int c = 0)
         {
             Problem problem = db.Problems.Find(id);
-            if (problem == null)
-            {
-                return HttpNotFound();
-            }
+            Contest contest = db.Contests.Find(c);
             ViewBag.c = c;
-            return View(problem);
+            ViewBag.ContTitle = contest!=null ? contest.Title : null;
+            if (problem == null)
+                return HttpNotFound();
+            if (c!=0)
+            {
+                if (contest == null)
+                    return View("Error", new HttpException(403, "没有找到比赛。"));
+                if (contest.State != ContestState.Running)
+                    return View("Error", new HttpException(403, "比赛已经结束或尚未开始。"));
+                if (!contest.UserList.Any(x => x.UserName == User.Identity.Name))
+                    return View("Error", new HttpException(403, "您没有参与这场比赛。"));
+                
+                return View(problem);
+            }
+            if (User.Identity.Name == "root" || problem.Public)
+                return View(problem);
+            return View("Error", new HttpException(403, "题目是隐藏的。请尝试使用管理员账号登陆。"));
         }
 
-
+        [AuthorizeAttribute(Users = "root")]
         public ActionResult Create()
         {
             return View(new UploadProblemModel());
@@ -54,6 +70,7 @@ namespace MvcApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeAttribute(Users = "root")]
         public ActionResult Create(UploadProblemModel form)
         {
             Mapper.CreateMap<UploadProblemModel,Problem>();
@@ -77,6 +94,7 @@ namespace MvcApplication1.Controllers
             return View(tmp);
         }
 
+        [AuthorizeAttribute(Users = "root")]
         public ActionResult Edit(int id = 0)
         {
             Problem problem = db.Problems.Find(id);
@@ -89,6 +107,7 @@ namespace MvcApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeAttribute(Users = "root")]
         public ActionResult Edit(UploadProblemModel form,int id = 0)
         {
             var prob = db.Problems.Find(id);
@@ -115,7 +134,7 @@ namespace MvcApplication1.Controllers
             return View(form);
         }
 
-        
+        [AuthorizeAttribute(Users = "root")]
         public ActionResult Delete(int id = 0)
         {
             Problem problem = db.Problems.Find(id);
@@ -126,6 +145,7 @@ namespace MvcApplication1.Controllers
             return View(problem);
         }
 
+        [AuthorizeAttribute(Users = "root")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -153,6 +173,8 @@ namespace MvcApplication1.Controllers
             db.Dispose();
             base.Dispose(disposing);
         }
+
+        #region 帮助程序
 
         [NonAction]
         public string ReadZip(ZipArchive zip, string path)
@@ -197,6 +219,7 @@ namespace MvcApplication1.Controllers
             }
         }
 
+        [NonAction]
         public string HashFile(Stream f)
         {
             f.Seek(0, SeekOrigin.Begin);
@@ -204,6 +227,6 @@ namespace MvcApplication1.Controllers
             var x = Cng.ComputeHash(f);
             return BitConverter.ToString(x).Replace("-", "").ToLower();
         }
-
+        #endregion
     }
 }
