@@ -152,8 +152,13 @@ namespace MvcApplication1.Controllers
             ViewBag.CTitle = contest.Title;
             if (type == "html")
                 return View(res);
-            //if (type="cvs")
-            //    return 
+            if (type == "csv")
+                return new FileContentResult(
+                    System.Text.Encoding.UTF8.GetBytes(
+                        CSVFile(ViewBag.prob, res)
+                     ),
+                    "Application/x-csv") { FileDownloadName = "导出的成绩.csv" };
+                 
             return HttpNotFound();
         }
 
@@ -165,6 +170,24 @@ namespace MvcApplication1.Controllers
 
 
         #region 帮助程序
+
+        public string CSVFile(List<Problem> prob,List<JsonContestReslut> res)
+        {
+            string csv = "User,";
+            foreach (var p in prob)
+            {
+                csv+=p.Title+"("+p.ID.ToString()+"),";
+            }
+            csv +="Totle\n";
+            foreach (var r in res)
+            {
+                csv+=r.UserName+",";
+                foreach (var x in r.Details)
+                    csv += x+",";
+                csv+=r.Src +"\n";
+            }
+            return csv;
+        }
 
         public Contest toContest(ContestFormModel form)
         {

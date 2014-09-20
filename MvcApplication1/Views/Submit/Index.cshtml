@@ -5,7 +5,7 @@
     bool isRoot = User.Identity.Name == "root";
 }
 
-<h2>Index</h2>
+<h2>所有提交</h2>
 
 @Html.Partial("_Pagination")
 
@@ -86,8 +86,13 @@
             </td>
         }
         <td>
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            <div class="btn-group">
+            @Html.ActionLink("Details", "Details", new { id=item.ID },new {@class="btn btn-default"})
+            @if (isRoot)
+            {
+                @Html.ActionLink("Delete", "Delete", new { id=item.ID },new {@class="btn btn-danger"})
+            }
+            </div>
         </td>
     </tr>
 }

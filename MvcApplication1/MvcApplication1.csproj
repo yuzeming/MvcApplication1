@@ -252,6 +252,7 @@
     <Content Include="Views\Contest\EditorTemplates\ContestFormModel.cshtml" />
     <Content Include="Views\Contest\Rank.cshtml" />
     <Content Include="Views\Account\UserImport.cshtml" />
+    <Content Include="Views\Account\SetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

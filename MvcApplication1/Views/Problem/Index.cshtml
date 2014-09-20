@@ -10,7 +10,7 @@
 @if (isRoot)
 {
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("新建题目", "Create",null, new { @class = "btn btn-success" })
 </p>
 }
 
@@ -19,7 +19,7 @@
         <th>#</th>
         <th>题目名称</th>
         <th>题目得分</th>
-        <th>操作</th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -42,16 +42,19 @@
             @src
         </td>
         <td>
-            @Html.ActionLink("Submit", "Create","Submit", new { id=item.ID },null)
-            @if (isRoot)
-            {
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID })
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-            }
+            <div class="btn-group">
+            @Html.ActionLink("提交", "Create","Submit", new { id=item.ID },new {@class="btn btn-default"})
             @if (item.PublicData || isRoot)
             {
-                @Html.ActionLink("Downland", "Downland", new { id=item.ID })
+                @Html.ActionLink("下载数据", "Downland", new { id=item.ID },new {@class="btn btn-default"})
             }
+            @if (isRoot)
+            {
+                @Html.ActionLink("编辑", "Edit", new { id=item.ID },new {@class="btn btn-default"})
+                @Html.ActionLink("删除", "Delete", new { id=item.ID },new {@class="btn btn-danger"})
+            }
+
+            </div>
         </td>
     </tr>
 }

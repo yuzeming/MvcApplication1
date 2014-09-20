@@ -132,6 +132,29 @@ namespace MvcApplication1.Controllers
             return View();
         }
 
+        public ActionResult SetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Users = "root")]
+        public ActionResult SetPassword(String username,String password)
+        {
+            try
+            {
+                var c = WebSecurity.GeneratePasswordResetToken(username, 10);
+                ViewBag.Res = WebSecurity.ResetPassword(c, password) ? "成功" : "失败";
+            }
+            catch (InvalidOperationException e)
+            {
+                ViewBag.Res = e.Message.ToString();
+            }
+
+            return View();
+        }
+
         #region 帮助程序
         private ActionResult RedirectToLocal(string returnUrl)
         {

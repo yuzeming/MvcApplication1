@@ -1,7 +1,8 @@
 ﻿@model MvcApplication1.Models.Problem
-
+@using MvcApplication1.Models
 @{
     ViewBag.Title = "Details";
+    bool Disable = ViewBag.ContState != null && (ContestState)ViewBag.ContState == ContestState.Past;
 }
 
 <h1>@Model.Title</h1>
@@ -9,7 +10,21 @@
 @Html.Raw(@Model.Description)
 </div>
 <div class="col-md-2">
-    <p>@ViewBag.ContTitle</p>
+    @if (ViewBag.ContTitle!=null)
+    {
+        <p>比赛:@ViewBag.ContTitle</p>
+    } 
+    @if (Disable)
+    {
+        @Html.ActionLink("Submit", "Create","Submit", new { id=Model.ID ,c = ViewBag.c},new { @class = "btn btn-default",disabled="disabled"})
+        <p class="help-block">抱歉，比赛已经结束，请尝试在题库内提交</p>
+        @Html.ActionLink("在题库中显示","Details",new { id=Model.ID})
+    }
+    else
+    {
+        @Html.ActionLink("Submit", "Create","Submit", new { id=Model.ID ,c = ViewBag.c},new { @class = "btn btn-default"})
+    }
+
     <pre>@Model.CheckSum</pre>
-    @Html.ActionLink("Submit", "Create","Submit", new { id=Model.ID ,c = ViewBag.c},new { @class = "btn btn-default" })
+    
 </div>

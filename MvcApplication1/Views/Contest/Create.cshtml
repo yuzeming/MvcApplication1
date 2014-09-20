@@ -1,10 +1,10 @@
 ﻿@model MvcApplication1.FormModels.ContestFormModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "新建比赛";
 }
 
-<h2>Create</h2>
+<h2>新建比赛</h2>
 
 @using (Html.BeginForm()) {
     <div class="col-md-6">
@@ -13,11 +13,7 @@
 
         @Html.EditorForModel()
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="创建" class="btn btn-success" />
         </p>
     </div>
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 }

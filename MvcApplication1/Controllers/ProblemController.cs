@@ -50,10 +50,11 @@ namespace MvcApplication1.Controllers
             {
                 if (contest == null)
                     return View("Error", new HttpException(403, "没有找到比赛。"));
-                if (contest.State != ContestState.Running)
-                    return View("Error", new HttpException(403, "比赛已经结束或尚未开始。"));
+                if (contest.State == ContestState.Before)
+                    return View("Error", new HttpException(403, "比赛尚未开始。"));
                 if (!contest.UserList.Any(x => x.UserName == User.Identity.Name))
                     return View("Error", new HttpException(403, "您没有参与这场比赛。"));
+                ViewBag.ContState = contest.State;
                 
                 return View(problem);
             }

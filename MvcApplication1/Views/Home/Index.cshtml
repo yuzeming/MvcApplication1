@@ -1,18 +1,30 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    bool isRoot = User.Identity.Name == "root";
 }
-<h1>Welcome Back.</h1>
 
-<h2>正在进行的比赛</h2>
-<ul>
-    @foreach (var x in ViewBag.c)
-    {
-        <li>
-            @Html.ActionLink((String)x.Title, "Details", "Contest", new { @id = (int)x.ID }, null)
-        </li>
-    }
+
+@if (User.Identity.IsAuthenticated)
+{
+    <h1>Welcome Back.</h1>
+    <h4>正在进行的比赛</h4>
+    <ul>
+        @foreach (var x in ViewBag.c)
+        {
+            <li>
+                @Html.ActionLink((String)x.Title, "Details", "Contest", new { @id = (int)x.ID }, null)
+            </li>
+        }
     
-</ul>
-
-<h2>管理员</h2>
-@Html.ActionLink("批量添加用户", "UserImport", "Account")
+    </ul>
+}
+else
+{
+    <h2>请您登录。</h2>
+}
+@if (isRoot)
+{
+    <h2>管理员</h2>
+    @Html.ActionLink("批量添加用户", "UserImport", "Account", new { @class = "btn btn-default" })
+    @Html.ActionLink("修改密码", "SetPassword", "Account", new { @class = "btn btn-default" })
+}

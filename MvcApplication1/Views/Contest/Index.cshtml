@@ -7,7 +7,7 @@
 
 <h2>比赛列表</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("新建比赛", "Create",null, new { @class = "btn btn-success" })
 </p>
 <table class="table table-striped">
     <tr>
@@ -15,7 +15,7 @@
         <th>比赛名称</th>
         <th>比赛时间</th>
         <th>状态</th>
-        <th>操作</th>
+        <th></th>
     </tr>
     @foreach (var i in Model)
     {
@@ -25,16 +25,18 @@
             <td>@i.Start ~ @i.End</td>
             <td>@i.State</td>
             <td>
+                <div class="btn-group">
                 @if (i.State != ContestState.Before || isRoot)
                 {
-                    @Html.ActionLink("进入","Details",new { id =i.ID })
-                    @Html.ActionLink("排名","Rank",new { id =i.ID })
+                    @Html.ActionLink("进入","Details",new { id =i.ID },new {@class="btn btn-default"})
+                    @Html.ActionLink("排名","Rank",new { id =i.ID },new {@class="btn btn-default"})
                 }
                 @if (isRoot)
                 {
-                    @Html.ActionLink("删除","Delete",new { id =i.ID })
-                    @Html.ActionLink("编辑","Edit",new { id =i.ID })
+                    @Html.ActionLink("编辑","Edit",new { id =i.ID },new {@class="btn btn-default"})
+                    @Html.ActionLink("删除","Delete",new { id =i.ID },new {@class="btn btn-danger"})
                 }
+                </div>
             </td>
         </tr>
     }
