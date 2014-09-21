@@ -1,0 +1,9 @@
+﻿@{
+    var tagList = (List<SelectListItem>)ViewBag.tagList;
+}
+<form id="tagform" class="form-horizontal" style="display:inline">
+    <label>
+    标签
+    @Html.DropDownList("tag", tagList, new { onchange = "javascript:$('#tagform').submit()" })
+    </label>
+</form>

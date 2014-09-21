@@ -3,16 +3,17 @@
 @{
     ViewBag.Title = "Index";
     bool isRoot = User.Identity.Name == "root";
+    
 }
 
 <h2>Index</h2>
 
 @if (isRoot)
 {
-<p>
-    @Html.ActionLink("新建题目", "Create",null, new { @class = "btn btn-success" })
-</p>
+@Html.ActionLink("新建题目", "Create",null, new { @class = "btn btn-success" })
 }
+
+@Html.Partial("_TagSelect")
 
 <table class="table table-striped">
     <tr>
@@ -37,6 +38,11 @@
         </td>
         <td>
             @Html.ActionLink(item.Title, "Details", new { id=item.ID })
+            <code>@(item.Tag == null ? "(未分类)" : item.Tag.Name)</code>
+            @if (!item.Public)
+            {
+                <code>隐藏</code>
+            }
         </td>
         <td>
             @src

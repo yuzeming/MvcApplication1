@@ -1,5 +1,7 @@
 ﻿@model MvcApplication1.FormModels.ContestFormModel
-
+@{
+    SelectList tagList =ViewBag.tagList;
+}
 <div class="form-group">
     @Html.LabelFor(Model => Model.Title)
     @Html.TextBoxFor(model => model.Title,new { @class = "form-control" })
@@ -41,3 +43,9 @@
     <p class="help-block">输入比赛注册的用户名，一行一个</p>
 </div>
     
+<div class="form-group">
+    <label>
+        @Html.LabelFor( m => m.Tag)
+        @Html.DropDownListFor( m => m.Tag, tagList)
+    </label>
+</div>

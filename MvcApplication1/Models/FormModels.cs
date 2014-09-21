@@ -75,6 +75,9 @@ namespace MvcApplication1.FormModels
 
         [Display(Name = "公开测试数据")]
         public bool PublicData { get; set; }
+
+        [Display(Name = "标签")]
+        public int Tag { get; set; }
     }
 
     public class SubmitModel
@@ -118,6 +121,9 @@ namespace MvcApplication1.FormModels
 
         [Display(Name = "用户列表")]
         public string UserStr { get; set; }
+
+        [Display(Name = "标签")]
+        public int Tag { get; set; }
     }
 
     public class JsonContestReslut

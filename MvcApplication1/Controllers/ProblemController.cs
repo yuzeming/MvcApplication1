@@ -24,7 +24,17 @@ namespace MvcApplication1.Controllers
     {
         private MyDbContext db = new MyDbContext();
 
-        public ActionResult Index()
+        public List<SelectListItem> GetTagList(int nowselect = 0)
+        {
+            var tags = db.Tags.ToList();
+            var ret = new List<SelectListItem>();
+            ret.Add(new SelectListItem() { Value="0" , Text="(全部)" ,Selected = (nowselect == 0) });
+            foreach (var x in tags)
+                ret.Add(new SelectListItem() {Value=x.ID.ToString() , Text = x.Name , Selected = (nowselect == x.ID) });
+            return ret;
+        }
+
+        public ActionResult Index(int tag = 0)
         {
             var tmp = db.Submits.Where(m => m.User.UserId == WebSecurity.CurrentUserId)
                 .GroupBy(m => m.Prob.ID)
@@ -35,6 +45,9 @@ namespace MvcApplication1.Controllers
             var query = db.Problems.AsQueryable();
             if (User.Identity.Name != "root")
                 query = query.Where(x => x.Public);
+            if (tag != 0)
+                query = query.Where(x => x.Tag.ID == tag);
+            ViewBag.tagList = GetTagList(tag);
             return View(query.ToList());
         }
 
@@ -66,6 +79,7 @@ namespace MvcApplication1.Controllers
         [AuthorizeAttribute(Users = "root")]
         public ActionResult Create()
         {
+            ViewBag.tagList = new SelectList(db.Tags, "ID", "Name");
             return View(new UploadProblemModel());
         }
 
@@ -74,8 +88,10 @@ namespace MvcApplication1.Controllers
         [AuthorizeAttribute(Users = "root")]
         public ActionResult Create(UploadProblemModel form)
         {
-            Mapper.CreateMap<UploadProblemModel,Problem>();
+            Mapper.CreateMap<UploadProblemModel,Problem>()
+                .ForMember( x => x.Tag , s => s.Ignore());
             var tmp = Mapper.Map<Problem>(form);
+            tmp.Tag = db.Tags.Find(form.Tag);
             if (form.File != null)
             {
                 ReadConfig(ref tmp,form.File.InputStream);
@@ -92,17 +108,20 @@ namespace MvcApplication1.Controllers
                 form.File.SaveAs(GetZipPath(tmp.ID));
                 return RedirectToAction("Index");
             }
-            return View(tmp);
+            ViewBag.tagList = new SelectList(db.Tags, "ID", "Name", form.Tag);
+            return View(form);
         }
 
         [AuthorizeAttribute(Users = "root")]
         public ActionResult Edit(int id = 0)
         {
-            Problem problem = db.Problems.Find(id);
+            var problem = db.Problems.Find(id);
             if (problem == null) return HttpNotFound();
 
-            Mapper.CreateMap<Problem,UploadProblemModel>();
+            Mapper.CreateMap<Problem,UploadProblemModel>()
+                .ForMember(x => x.Tag, s => s.MapFrom(y => y==null?0:y.Tag.ID));
             var tmp = Mapper.Map<UploadProblemModel>(problem);
+            ViewBag.tagList = new SelectList(db.Tags, "ID", "Name", tmp.Tag);
             return View(tmp);
         }
 
@@ -125,13 +144,20 @@ namespace MvcApplication1.Controllers
                 prob.Title = form.Title;
                 prob.Public = form.Public;
                 prob.PublicData = form.PublicData;
-                prob.CheckSum = HashFile(form.File.InputStream);
-                db.Problems.AddOrUpdate(prob);
+                prob.Tag = ( form.Tag == 0 ? null : db.Tags.Find(form.Tag) );
+                if (form.File != null)
+                {
+                    prob.CheckSum = HashFile(form.File.InputStream);
+                    System.IO.File.Delete(GetZipPath(id));
+                    form.File.SaveAs(GetZipPath(id));
+                }
+                db.Entry(prob).State = EntityState.Modified;
+                //db.Problems.AddOrUpdate(prob);
                 db.SaveChanges();
-                System.IO.File.Delete(GetZipPath(id));
-                form.File.SaveAs(GetZipPath(id));
+
                 return RedirectToAction("Index");
             }
+            ViewBag.tagList = new SelectList(db.Tags, "ID", "Name", form.Tag);
             return View(form);
         }
 

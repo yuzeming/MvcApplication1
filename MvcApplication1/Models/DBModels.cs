@@ -19,6 +19,7 @@ namespace MvcApplication1.Models
         public DbSet<Problem> Problems { set; get; }
         public DbSet<Submit> Submits { get; set; }
         public DbSet<Contest> Contests { get; set; }
+        public DbSet<Tag> Tags { get; set; }
     }
 
     public class UserIntializer : DropCreateDatabaseIfModelChanges<MyDbContext>
@@ -56,6 +57,8 @@ namespace MvcApplication1.Models
         [Required]
         public string Description { set; get; }
     //    public string Solution { set; get; }
+
+        public virtual Tag Tag { get; set; }
     }
 
 
@@ -128,6 +131,8 @@ namespace MvcApplication1.Models
         public string Result { get; set; } // JSON
         public bool Update { get; set; }  // 惰性更新结果数据
 
+        public virtual Tag Tag { get; set; }
+
         public ContestState State
         {
             get
@@ -139,6 +144,15 @@ namespace MvcApplication1.Models
                 return ContestState.Running;
             }
         }
+    }
+
+    public class Tag
+    {
+        [Key]
+        public int ID { get; set; }
+
+        [Required]
+        public string Name { get; set; }
     }
 
     public class JsonConfig

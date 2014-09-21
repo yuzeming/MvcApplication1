@@ -6,9 +6,13 @@
 }
 
 <h2>比赛列表</h2>
-<p>
+@if (isRoot)
+{
     @Html.ActionLink("新建比赛", "Create",null, new { @class = "btn btn-success" })
-</p>
+}
+
+@Html.Partial("_TagSelect")
+
 <table class="table table-striped">
     <tr>
         <th>#</th>
@@ -21,7 +25,7 @@
     {
         <tr>
             <td>@i.ID</td>
-            <td>@i.Title</td>
+            <td>@i.Title <code>@i.Tag.Name</code></td>
             <td>@i.Start ~ @i.End</td>
             <td>@i.State</td>
             <td>

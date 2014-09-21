@@ -25,6 +25,7 @@ else
 @if (isRoot)
 {
     <h2>管理员</h2>
-    @Html.ActionLink("批量添加用户", "UserImport", "Account", new { @class = "btn btn-default" })
-    @Html.ActionLink("修改密码", "SetPassword", "Account", new { @class = "btn btn-default" })
+    @Html.ActionLink("批量添加用户", "UserImport", "Account",null, new { @class = "btn btn-default" })
+    @Html.ActionLink("修改密码", "SetPassword", "Account",null, new { @class = "btn btn-default" })
+    @Html.ActionLink("分类管理", "Index","Tag",null, new { @class = "btn btn-default" })
 }
