@@ -60,7 +60,7 @@ def Exec(argv, limit=None, pp=None, RootDir=None):
         ft = win32process.GetProcessTimes(pi[0])
         ret[3] = mem = round(float(pmc["PeakPagefileUsage"]) / 1024 / 1024, 2)
         ret[2] = time = round(float(ft["UserTime"]) / WIN32_PROCESS_TIMES_TICKS_PER_SECOND, 2)
-        print cmd, exitCode, ret
+        #print cmd, exitCode, ret
         if limit is not None and time > float(limit[0]):
             ret[1] = u"TimeLimitExceeded"
             CloseProcess(pi)

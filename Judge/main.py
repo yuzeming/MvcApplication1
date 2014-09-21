@@ -9,6 +9,10 @@ from Conf import *
 from Win_R import *
 from HashFile import *
 from Web import *
+import traceback
+
+ShowError = True
+logger = None
 
 def GetConf(name):
     """
@@ -134,7 +138,6 @@ def Judge(s):
         OutputFileName = os.path.join(TempDir, "output.txt")
         DataConf = ProbConf["Data"]
 
-        FirstError = ""
         for Data in DataConf:
             Input = os.path.join(DataRoot, "data", Data[0])
             Output = os.path.join(DataRoot, "data", Data[1])
@@ -163,20 +166,25 @@ def Judge(s):
                             DataRes[0] = tmpList[0] * float(Data[4])
                             DataRes[1] = strip(tmpList[1])
                             if tmpList[0] == 1:
-                                DataRes[1] =DataRes[1] or u"Accepted"
+                                DataRes[1] = u"Accepted"
                             else:
                                 DataRes[1] = DataRes[1] or u"WrongAnswer"
-                                FirstError = FirstError or u"WrongAnswer"
+                                Ret["State"] =  Ret["State"] or u"WrongAnswer"
                     #Clean up
-                DelFile(OutputFileName)
-            if (not FirstError and DataRes[1] != u"Accepted"):
-                FirstError = DataRes[1]
+                    DelFile(OutputFileName)
+            if DataRes[1] != u"Accepted" and not Ret["State"] :
+                Ret["State"] = DataRes[1]
             Ret["Score"] += DataRes[0]
             Ret["Result"].append(DataRes)
         DelFile(Exe)
-        Ret["State"] = FirstError or u"Accepted"
-    except:
-        raise
+        if not Ret["State"]:
+            Ret["State"]=u"Accepted"
+    except Exception as e:
+        if logger:
+            logger.error(str(e))
+            logger.error(traceback.format_exc())
+        if ShowError:
+            raise
         Ret["State"] = u"SystemError"
 
     return Ret
@@ -199,7 +207,7 @@ def Main():
             Res = Judge(s)
             PostRes(JudgeKey, Res)
         else:
-            sleep(3)
+            sleep(5)
 
 
 if __name__ == '__main__':
