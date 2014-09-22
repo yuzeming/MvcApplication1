@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Roles>
+  <Controller name="Home">
+  </Controller>
+  <Controller name="Contest">
+    <Action name="Index">root,manage</Action>
+    <Action name="Create">root,manage</Action>
+    <Action name="Edit">root,manage</Action>
+    <Action name="Delete">root,manage</Action>
+    <Action name="DeleteConfirmed">root,manage</Action>
+  </Controller>
+  <Controller name="Account">
+    <Action name="UserImport">root,manage</Action>
+    <Action name="SetPassword">root,manage</Action>
+  </Controller>
+  <Controller name="Problem">
+    <Action name="Create">root,manage</Action>
+    <Action name="Edit">root,manage</Action>
+    <Action name="Delete">root,manage</Action>
+  </Controller>
+  <Controller name="Submit">
+    <Action name="IndexPost">root,manage</Action>
+  </Controller>
+  <Controller name="Tag">
+    <Action name="Index">root,manage</Action>
+    <Action name="Create">root,manage</Action>
+    <Action name="Edit">root,manage</Action>
+    <Action name="Delete">root,manage</Action>
+    <Action name="DeleteConfirmed">root,manage</Action>
+    <Action name="Dispose">root,manage</Action>
+  </Controller>
+</Roles>

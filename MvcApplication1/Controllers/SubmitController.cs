@@ -74,7 +74,6 @@ namespace MvcApplication1.Controllers
 
         [HttpPost, ActionName("Index")]
         [ValidateAntiForgeryToken]
-        [AuthorizeAttribute(Users = "root")]
         public ActionResult IndexPost(SubmitSearchModel search) 
         {
             var query = Search(db.Submits,search);

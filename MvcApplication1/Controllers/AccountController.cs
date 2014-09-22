@@ -94,7 +94,6 @@ namespace MvcApplication1.Controllers
             return View(model);
         }
 
-        [Authorize(Users="root")]
         public ActionResult UserImport()
         {
             return View();
@@ -102,7 +101,6 @@ namespace MvcApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Users = "root")]
         public ActionResult UserImport(String import)
         {
             String Res = "";
@@ -139,7 +137,6 @@ namespace MvcApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Users = "root")]
         public ActionResult SetPassword(String username,String password)
         {
             try
