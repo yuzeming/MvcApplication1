@@ -201,13 +201,21 @@ def Main():
         if not os.path.isdir(x):
             os.mkdir(x)
     while isRunning:
-        #try:
-        s = GetSubmit(JudgeKey)
-        if s is not None:
-            Res = Judge(s)
-            PostRes(JudgeKey, Res)
-        else:
-            sleep(5)
+        try:
+            s = GetSubmit(JudgeKey)
+            if s is not None:
+                Res = Judge(s)
+                PostRes(JudgeKey, Res)
+            else:
+                sleep(5)
+        except Exception as e:
+            if logger:
+                logger.error(str(e))
+                logger.error(traceback.format_exc())
+            if ShowError:
+                raise
+            sleep(10)
+            
 
 
 if __name__ == '__main__':
