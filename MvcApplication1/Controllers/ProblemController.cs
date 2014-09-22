@@ -76,7 +76,6 @@ namespace MvcApplication1.Controllers
             return View("Error", new HttpException(403, "题目是隐藏的。请尝试使用管理员账号登陆。"));
         }
 
-        [AuthorizeAttribute(Users = "root")]
         public ActionResult Create()
         {
             ViewBag.tagList = new SelectList(db.Tags, "ID", "Name");
@@ -85,7 +84,6 @@ namespace MvcApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [AuthorizeAttribute(Users = "root")]
         public ActionResult Create(UploadProblemModel form)
         {
             Mapper.CreateMap<UploadProblemModel,Problem>()
@@ -112,7 +110,6 @@ namespace MvcApplication1.Controllers
             return View(form);
         }
 
-        [AuthorizeAttribute(Users = "root")]
         public ActionResult Edit(int id = 0)
         {
             var problem = db.Problems.Find(id);
@@ -127,7 +124,6 @@ namespace MvcApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [AuthorizeAttribute(Users = "root")]
         public ActionResult Edit(UploadProblemModel form,int id = 0)
         {
             var prob = db.Problems.Find(id);
@@ -161,7 +157,6 @@ namespace MvcApplication1.Controllers
             return View(form);
         }
 
-        [AuthorizeAttribute(Users = "root")]
         public ActionResult Delete(int id = 0)
         {
             Problem problem = db.Problems.Find(id);
@@ -172,7 +167,6 @@ namespace MvcApplication1.Controllers
             return View(problem);
         }
 
-        [AuthorizeAttribute(Users = "root")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

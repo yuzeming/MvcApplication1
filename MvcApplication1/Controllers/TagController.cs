@@ -9,7 +9,6 @@ using MvcApplication1.Models;
 
 namespace MvcApplication1.Controllers
 {
-    [AuthorizeAttribute(Users = "root")]
     public class TagController : Controller
     {
         private MyDbContext db = new MyDbContext();
