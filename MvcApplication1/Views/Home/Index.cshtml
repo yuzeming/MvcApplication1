@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Home Page";
-    bool isRoot = User.Identity.Name == "root";
+    bool isRoot = User.IsInRole("admin") || User.IsInRole("root");
 }
 
 

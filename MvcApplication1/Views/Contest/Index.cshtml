@@ -2,7 +2,7 @@
 @using MvcApplication1.Models
 @{
     ViewBag.Title = "Index";
-    bool isRoot = User.Identity.Name == "root";
+    bool isRoot = User.IsInRole("admin") || User.IsInRole("root");
 }
 
 <h2>比赛列表</h2>

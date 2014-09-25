@@ -202,6 +202,7 @@
     <Compile Include="Controllers\SubmitController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="Filters\MvcAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -210,6 +211,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ActionRoles.xml" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -270,6 +272,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Problems\1.zip" />
+    <Content Include="Problems\2.zip" />
+    <Content Include="Problems\3.zip" />
+    <Content Include="Problems\4.zip" />
     <None Include="Properties\PublishProfiles\发布到文件系统.pubxml" />
   </ItemGroup>
   <PropertyGroup>
