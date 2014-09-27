@@ -17,6 +17,7 @@ namespace MvcApplication1.Controllers
     {
         private MyDbContext db = new MyDbContext();
 
+        [NonAction]
         public List<SelectListItem> GetTagList(int nowselect = 0)
         {
             var tags = db.Tags.ToList();
@@ -57,6 +58,7 @@ namespace MvcApplication1.Controllers
             return View(contest);
         }
 
+        [Authorize(Roles = "root")]
         public ActionResult Create()
         {
             ViewBag.tagList = new SelectList(db.Tags, "ID", "Name");
@@ -65,6 +67,7 @@ namespace MvcApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "root")]
         public ActionResult Create(ContestFormModel form)
         {
             var tmp = toContest(form);
@@ -78,6 +81,7 @@ namespace MvcApplication1.Controllers
             return View(form);
         }
 
+        [Authorize(Roles = "root")]
         public ActionResult Edit(int id = 0)
         {
             Contest contest = db.Contests.Find(id);
@@ -91,6 +95,7 @@ namespace MvcApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "root")]
         public ActionResult Edit(int id,ContestFormModel form)
         {
             var tmp = db.Contests.Find(id);
@@ -119,6 +124,7 @@ namespace MvcApplication1.Controllers
             return View(form);
         }
 
+        [Authorize(Roles = "root")]
         public ActionResult Delete(int id = 0)
         {
             Contest contest = db.Contests.Find(id);
@@ -131,6 +137,7 @@ namespace MvcApplication1.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "root")]
         public ActionResult DeleteConfirmed(int id)
         {
             Contest contest = db.Contests.Find(id);

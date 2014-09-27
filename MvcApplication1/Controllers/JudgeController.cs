@@ -8,12 +8,13 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
 using AutoMapper;
 using MvcApplication1.Models;
 
 namespace MvcApplication1.Controllers
 {
-    [Authorize]
+
     public class SubmitApiModels
     {
         public int ID { get; set; }
@@ -32,11 +33,22 @@ namespace MvcApplication1.Controllers
         public string CompilerRes { get; set; }
     }
 
+    public class CheckJudge : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (filterContext.HttpContext.Request.QueryString["jk"] == MvcApplication1)
+            {
+                filterContext.HttpContext.Response.Redirect("/User/Login");
+            }
+        }
+    }
+
     public class JudgeController : ApiController
     {
         private MyDbContext db = new MyDbContext();
         
-        [NonAction]
+        [System.Web.Http.NonAction]
         public void SetUpdate(Contest c)
         {
             if (c != null)

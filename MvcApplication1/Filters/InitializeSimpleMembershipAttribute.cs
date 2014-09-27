@@ -5,6 +5,7 @@ using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
 using MvcApplication1.Models;
+using System.Web.Security;
 
 namespace MvcApplication1.Filters
 {
@@ -35,6 +36,22 @@ namespace MvcApplication1.Filters
                         {
                             // 创建不包含 Entity Framework 迁移架构的 SimpleMembership 数据库
                             ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
+                            foreach (string role in new string[] {"root", "user" })
+                                if (!Roles.RoleExists(role))
+                                    Roles.CreateRole(role);
+
+                            if (!WebSecurity.UserExists("root"))
+                            {
+                                WebSecurity.CreateUserAndAccount("root", "toor123");
+                                Roles.AddUserToRole("root", "root");
+                            }
+
+                            foreach (string role in new string[] { "chenli", "zhangli", "guoyuchen", "pantianxiang", })
+                                if (!WebSecurity.UserExists(role))
+                                {
+                                    WebSecurity.CreateUserAndAccount(role, "123456");
+                                    Roles.AddUserToRole(role, "root");
+                                }
                         }
                     }
 
