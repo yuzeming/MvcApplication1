@@ -3,29 +3,37 @@
   <Controller name="Home">
   </Controller>
   <Controller name="Contest">
-    <Action name="Create">root,admin</Action>
-    <Action name="Edit">root,admin</Action>
-    <Action name="Delete">root,admin</Action>
-    <Action name="DeleteConfirmed">root,admin</Action>
+    <Action name="Index">root,manage,user</Action>
+    <Action name="Create">root,manage</Action>
+    <Action name="Edit">root,manage</Action>
+    <Action name="Delete">root,manage</Action>
+    <Action name="DeleteConfirmed">root,manage</Action>
   </Controller>
   <Controller name="Account">
-    <Action name="UserImport">root,admin</Action>
-    <Action name="SetPassword">root,admin</Action>
+    <Action name="UserImport">root,manage</Action>
+    <Action name="SetPassword">root,manage</Action>
+    <Action name="Manage">root,manage,user</Action>
   </Controller>
   <Controller name="Problem">
-    <Action name="Create">root,admin</Action>
-    <Action name="Edit">root,admin</Action>
-    <Action name="Delete">root,admin</Action>
+    <Action name="Create">root,manage</Action>
+    <Action name="Edit">root,manage</Action>
+    <Action name="Delete">root,manage</Action>
+    <Action name="Index">root,manage,user</Action>
+    <Action name="Detail">root,manage,user</Action>
   </Controller>
   <Controller name="Submit">
-    <Action name="IndexPost">root,admin</Action>
+    <Action name="Index">root,manage,user</Action>
+    <Action name="IndexPost">root,manage,user</Action>
+    <Action name="Detail">root,manage,user</Action>
+    <Action name="Create">root,manage,user</Action>
+    <Action name="Delete">root,manage</Action>
   </Controller>
   <Controller name="Tag">
-    <Action name="Index">root,admin</Action>
-    <Action name="Create">root,admin</Action>
-    <Action name="Edit">root,admin</Action>
-    <Action name="Delete">root,admin</Action>
-    <Action name="DeleteConfirmed">root,admin</Action>
-    <Action name="Dispose">root,admin</Action>
+    <Action name="Index">root,manage</Action>
+    <Action name="Create">root,manage</Action>
+    <Action name="Edit">root,manage</Action>
+    <Action name="Delete">root,manage</Action>
+    <Action name="DeleteConfirmed">root,manage</Action>
+    <Action name="Dispose">root,manage</Action>
   </Controller>
 </Roles>

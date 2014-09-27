@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
-    bool isRoot = User.Identity.Name == "root";
+    bool isRoot = User.IsInRole("admin") || User.IsInRole("root");
     bool ShowSrc = isRoot || Model.User.UserName == User.Identity.Name;
 }
 
