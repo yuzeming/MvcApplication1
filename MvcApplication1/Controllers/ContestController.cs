@@ -35,16 +35,15 @@ namespace MvcApplication1.Controllers
             return View(query.ToList());
         }
 
-        //[CanUseReadContestFilter]
         public ActionResult Details(int id = 0)
         {
             Contest contest = db.Contests.Find(id);
             if (contest == null)
-                throw new HttpException(404, "没有这样的比赛");
-            if (!contest.UserList.Any(x => x.UserName == User.Identity.Name))
-                throw new HttpException(403, "您没有参与这场比赛。");
+                return View("Error", new HttpException(403, "没有找到比赛。"));
             if (contest.State == ContestState.Before)
-                throw new HttpException(403, "比赛还没有开始");
+                return View("Error", new HttpException(403, "比赛尚未开始。"));
+            if (!contest.UserList.Any(x => x.UserName == User.Identity.Name))
+                return View("Error", new HttpException(403, "您没有参与这场比赛。"));
             return View(contest);
         }
 
@@ -94,7 +93,6 @@ namespace MvcApplication1.Controllers
             tmp.Start = form.Start;
             tmp.Public = form.Public;
             tmp.Tag = db.Tags.Find(form.Tag);
-
             tmp.ProbList.Clear();
             foreach (var p in GetProbList(form))
                 tmp.ProbList.Add(p);
@@ -284,9 +282,9 @@ namespace MvcApplication1.Controllers
 
         public List<Problem> GetProbList(ContestFormModel x)
         {
-            if (String.IsNullOrWhiteSpace(x.ProbStr))
-                return null;
             var tmpPorb = new List<Problem>();
+            if (String.IsNullOrWhiteSpace(x.ProbStr))
+                return tmpPorb;
             foreach (var s in x.ProbStr.Split(new char[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 int i;

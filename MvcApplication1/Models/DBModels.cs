@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
+using System.Data.Entity.ModelConfiguration.Conventions;
+
 
 namespace MvcApplication1.Models
 {
@@ -20,6 +22,12 @@ namespace MvcApplication1.Models
         public DbSet<Submit> Submits { get; set; }
         public DbSet<Contest> Contests { get; set; }
         public DbSet<Tag> Tags { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Submit>().HasOptional(x => x.Belog).WithMany().WillCascadeOnDelete();
+        }
+
     }
 
     public class UserIntializer : DropCreateDatabaseIfModelChanges<MyDbContext>
@@ -28,6 +36,7 @@ namespace MvcApplication1.Models
         {
             base.Seed(context);
         }
+         
     }
 
     public class UserProfile
@@ -56,7 +65,6 @@ namespace MvcApplication1.Models
 
         [Required]
         public string Description { set; get; }
-    //    public string Solution { set; get; }
 
         public virtual Tag Tag { get; set; }
     }
@@ -68,9 +76,12 @@ namespace MvcApplication1.Models
         Running = 1000,
 
         Accepted = 0,
+        PartiallyCorrect = 1,
+
         TimeLimitExceeded = 2,
         MemoryLimitExceeded = 3,
         WrongAnswer = 4,
+        
         RuntimeError = 5,
         OutputLimitExceeded = 6,
         CompileError = 7,
@@ -89,7 +100,10 @@ namespace MvcApplication1.Models
         public int ID { get; set; }
         [Required]
         public string Lang { get; set; }
+
+        [Required]
         public virtual Problem Prob { get; set; }
+
         public virtual UserProfile User { get; set; }
 
         [Required]
@@ -101,6 +115,7 @@ namespace MvcApplication1.Models
         public int Score { get; set; }
         public string Result { get; set; } //Json
         public string CompilerRes { get; set; }
+
         public virtual Contest Belog { get; set; }
     }
 

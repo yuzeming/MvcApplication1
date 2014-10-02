@@ -25,7 +25,7 @@
     {
         <tr>
             <td>@i.ID</td>
-            <td>@i.Title <code>@i.Tag.Name</code></td>
+            <td>@i.Title <code>@(i.Tag==null?"未分类":i.Tag.Name)</code></td>
             <td>@i.Start ~ @i.End</td>
             <td>@i.State</td>
             <td>

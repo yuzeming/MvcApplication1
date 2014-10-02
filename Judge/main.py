@@ -10,6 +10,7 @@ from Win_R import *
 from HashFile import *
 from Web import *
 import traceback
+import codecs
 
 ShowError = True
 logger = None
@@ -27,7 +28,7 @@ def GetConf(name):
 
 
 def SaveToFile(text, name):
-    f = open(name, "w")
+    f = codecs.open(name, "wb", "utf-8")
     f.write(text)
     f.close()
 
@@ -151,7 +152,7 @@ def Judge(s):
             win32file.CloseHandle(ouf)
             if DataRes[0]:
                 if not os.path.exists(OutputFileName):
-                    DataRes[0:2] = [0, u"输出文件未找到"]
+                    DataRes[0:2] = [0, u"WrongAnswer 程序没有输出"]
                 else:
                     tmpCC = copy.deepcopy(CompareConf)
                     Replace(tmpCC, {"$(IN)": Input, "$(OUT)": OutputFileName, "$(ANS)": Output, })
@@ -166,14 +167,14 @@ def Judge(s):
                             DataRes[0] = tmpList[0] * float(Data[4])
                             DataRes[1] = strip(tmpList[1])
                             if tmpList[0] == 1:
-                                DataRes[1] = u"Accepted"
+                                DataRes[1] = u"Accepted "+DataRes[1]
+                            elif tmpList[0] == 1:
+                                DataRes[1] = u"WrongAnswer " + DataRes[1]
                             else:
-                                DataRes[1] = DataRes[1] or u"WrongAnswer"
-                                Ret["State"] =  Ret["State"] or u"WrongAnswer"
+                                DataRes[1] = u"PartiallyCorrect " + DataRes[1]
                     #Clean up
                     DelFile(OutputFileName)
-            if DataRes[1] != u"Accepted" and not Ret["State"] :
-                Ret["State"] = DataRes[1]
+            Ret["State"] = Ret["State"] or (DataRes[1].split()[0])
             Ret["Score"] += DataRes[0]
             Ret["Result"].append(DataRes)
         DelFile(Exe)

@@ -73,7 +73,7 @@ def Exec(argv, limit=None, pp=None, RootDir=None):
             if not exitCode:
                 ret[0] = True
             else:
-                ret[1] = u"RuntimeError" + unicode(exitCode)
+                ret[1] = u"RuntimeError " + unicode(exitCode)
             CloseProcess(pi)
             return ret
         sleep(0.05)

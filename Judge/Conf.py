@@ -4,7 +4,7 @@ import os
 import sys
 
 #服务器位置
-WebServer = 'http://localhost'
+WebServer = 'http://localhost:54764'
 
 #指定根目录位置
 ROOTDIR = sys.path[0]

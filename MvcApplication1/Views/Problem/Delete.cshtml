@@ -10,10 +10,10 @@
    ( @Html.DisplayFor(model => model.ID) ) 
     @Html.DisplayFor(model => model.Title)
 </div>
-
+<b>将从所有比赛中删除数据，并删除所有相关提交。</b>
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     <p>
-        <input type="submit" value="删除" class="btn btn-danger"/>
+        <input type="submit" value="删除" class="btn btn-danger"/><b>操作不可以撤销！</b>
     </p>
 }

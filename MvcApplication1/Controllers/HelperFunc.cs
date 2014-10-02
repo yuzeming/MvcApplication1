@@ -34,19 +34,4 @@ namespace MvcApplication1.Controllers
         }
     }
 
-    public class CanUseReadContestFilterAttribute : ActionFilterAttribute
-    {
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
-        {
-            var db = new MyDbContext();
-            int? id = filterContext.ActionParameters["id"] as Int32?;
-            Contest contest = db.Contests.Find(id);
-            if (contest == null)
-                throw new HttpException(404, "没有这样的比赛");
-            if (!contest.UserList.Any(x => x.UserName == filterContext.HttpContext.User.Identity.Name))
-                throw new HttpException(403, "您没有参与这场比赛。");
-            if (contest.State == ContestState.Before)
-                throw new HttpException(403, "比赛还没有开始");
-        }
-    }
 }
