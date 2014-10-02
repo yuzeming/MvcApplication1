@@ -1,12 +1,12 @@
-﻿@model System.Web.HttpException
+﻿@*@model System.Web.HttpException
 
 @{
-    ViewBag.Title = "很抱歉";
+    ViewBag.Title = "Sorry.";
     Response.StatusCode = Model.GetHttpCode();
-}
+}*@
 
 <h1>很抱歉。</h1>
 <div class="well">
-    @Model.Message.ToString()
+    @*@Model.Message.ToString()*@
 </div>
 

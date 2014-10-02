@@ -17,17 +17,6 @@ namespace MvcApplication1.Controllers
     {
         private MyDbContext db = new MyDbContext();
 
-        [NonAction]
-        public List<SelectListItem> GetTagList(int nowselect = 0)
-        {
-            var tags = db.Tags.ToList();
-            var ret = new List<SelectListItem>();
-            ret.Add(new SelectListItem() { Value = "0", Text = "(全部)", Selected = (nowselect == 0) });
-            foreach (var x in tags)
-                ret.Add(new SelectListItem() { Value = x.ID.ToString(), Text = x.Name, Selected = (nowselect == x.ID) });
-            return ret;
-        }
-
         public ContestController()
         {
             Mapper.CreateMap<ContestFormModel, Contest>();
@@ -42,23 +31,24 @@ namespace MvcApplication1.Controllers
             var query = db.Contests.AsQueryable();
             if (tag != 0)
                 query = query.Where(x => x.Tag.ID == tag);
-            ViewBag.tagList = GetTagList(tag);
+            ViewBag.tagList = HelperFunc.GetTagList(tag);
             return View(query.ToList());
         }
 
+        //[CanUseReadContestFilter]
         public ActionResult Details(int id = 0)
         {
             Contest contest = db.Contests.Find(id);
-            if (!contest.UserList.Any(x => x.UserName == User.Identity.Name))
-                return View("Error", new HttpException(403, "您没有参与这场比赛。"));
-            if (contest.State == ContestState.Before)
-                return View("Error",new HttpException(403,"比赛还没有开始"));
             if (contest == null)
-                return HttpNotFound();
+                throw new HttpException(404, "没有这样的比赛");
+            if (!contest.UserList.Any(x => x.UserName == User.Identity.Name))
+                throw new HttpException(403, "您没有参与这场比赛。");
+            if (contest.State == ContestState.Before)
+                throw new HttpException(403, "比赛还没有开始");
             return View(contest);
         }
 
-        [Authorize(Roles = "root")]
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             ViewBag.tagList = new SelectList(db.Tags, "ID", "Name");
@@ -67,7 +57,7 @@ namespace MvcApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "root")]
+        [Authorize(Roles = "admin")]
         public ActionResult Create(ContestFormModel form)
         {
             var tmp = toContest(form);
@@ -81,7 +71,7 @@ namespace MvcApplication1.Controllers
             return View(form);
         }
 
-        [Authorize(Roles = "root")]
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(int id = 0)
         {
             Contest contest = db.Contests.Find(id);
@@ -95,7 +85,7 @@ namespace MvcApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "root")]
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(int id,ContestFormModel form)
         {
             var tmp = db.Contests.Find(id);
@@ -124,7 +114,7 @@ namespace MvcApplication1.Controllers
             return View(form);
         }
 
-        [Authorize(Roles = "root")]
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(int id = 0)
         {
             Contest contest = db.Contests.Find(id);
@@ -137,7 +127,7 @@ namespace MvcApplication1.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "root")]
+        [Authorize(Roles = "admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Contest contest = db.Contests.Find(id);
@@ -198,7 +188,7 @@ namespace MvcApplication1.Controllers
             {
                 csv+=p.Title+"("+p.ID.ToString()+"),";
             }
-            csv +="Totle\n";
+            csv += "Total\n";
             foreach (var r in res)
             {
                 csv+=r.UserName+",";
@@ -224,7 +214,6 @@ namespace MvcApplication1.Controllers
 
             return tmp;
         }
-
 
         [NonAction]
         public List<JsonContestReslut> GetReslutList(Contest cont, List<Problem> prob = null, List<UserProfile> user = null)

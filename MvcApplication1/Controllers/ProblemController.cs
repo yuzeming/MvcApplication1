@@ -24,16 +24,6 @@ namespace MvcApplication1.Controllers
     {
         private MyDbContext db = new MyDbContext();
 
-        public List<SelectListItem> GetTagList(int nowselect = 0)
-        {
-            var tags = db.Tags.ToList();
-            var ret = new List<SelectListItem>();
-            ret.Add(new SelectListItem() { Value="0" , Text="(全部)" ,Selected = (nowselect == 0) });
-            foreach (var x in tags)
-                ret.Add(new SelectListItem() {Value=x.ID.ToString() , Text = x.Name , Selected = (nowselect == x.ID) });
-            return ret;
-        }
-
         public ActionResult Index(int tag = 0)
         {
             var tmp = db.Submits.Where(m => m.User.UserId == WebSecurity.CurrentUserId)
@@ -47,7 +37,7 @@ namespace MvcApplication1.Controllers
                 query = query.Where(x => x.Public);
             if (tag != 0)
                 query = query.Where(x => x.Tag.ID == tag);
-            ViewBag.tagList = GetTagList(tag);
+            ViewBag.tagList = HelperFunc.GetTagList(tag);
             return View(query.ToList());
         }
 

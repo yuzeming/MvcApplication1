@@ -50,13 +50,14 @@ namespace MvcApplication1.Filters
                     {
                         WebSecurity.CreateUserAndAccount("root", "lloopp11");
                         Roles.AddUserToRole("root", "root");
+                        Roles.AddUserToRole("root", "admin");
                     }
 
                     foreach (string role in new string[] { "chenli", "zhangli", "guoyuchen", "pantianxiang", "yuzeming" })
                         if (!WebSecurity.UserExists(role))
                         {
                             WebSecurity.CreateUserAndAccount(role, "123456");
-                            Roles.AddUserToRole(role, "root");
+                            Roles.AddUserToRole(role, "admin");
                         }
 
                 }

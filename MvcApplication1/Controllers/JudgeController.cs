@@ -37,7 +37,7 @@ namespace MvcApplication1.Controllers
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (filterContext.HttpContext.Request.QueryString["jk"] == MvcApplication1)
+            if (filterContext.HttpContext.Request.QueryString["jk"] == "aaa")
             {
                 filterContext.HttpContext.Response.Redirect("/User/Login");
             }

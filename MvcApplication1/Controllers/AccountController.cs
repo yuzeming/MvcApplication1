@@ -95,7 +95,7 @@ namespace MvcApplication1.Controllers
             return View(model);
         }
 
-        [Authorize(Roles="root")]
+        [Authorize(Roles="admin")]
         public ActionResult UserImport()
         {
             return View();
@@ -103,7 +103,7 @@ namespace MvcApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "root")]
+        [Authorize(Roles = "admin")]
         public ActionResult UserImport(String import)
         {
             String Res = "";
@@ -141,7 +141,7 @@ namespace MvcApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "root")]
+        [Authorize(Roles = "admin")]
         public ActionResult SetPassword(String username,String password)
         {
             try
