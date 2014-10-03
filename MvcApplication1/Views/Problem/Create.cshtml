@@ -1,10 +1,10 @@
 ﻿@model MvcApplication1.FormModels.UploadProblemModel
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "新建题目";
     ViewBag.Tip = "上传数据压缩包，自动读取题目配置。";
 }
 
-<h2>Create</h2>
+<h2>新建题目</h2>
 
 @using (Html.BeginForm("Create","Problem",FormMethod.Post,new { enctype ="multipart/form-data" ,@class="col-md-6"})){
     @Html.AntiForgeryToken()

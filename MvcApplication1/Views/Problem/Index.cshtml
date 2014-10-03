@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<MvcApplication1.Models.Problem>
 @using MvcApplication1.Models
 @{
-    ViewBag.Title = "Index";
-    bool isRoot = User.IsInRole("admin") || User.IsInRole("root");
+    ViewBag.Title = "题目列表";
+    bool isRoot = User.IsInRole("admin");
 }
 
-<h2>Index</h2>
+<h2>题目列表</h2>
 
 @if (isRoot)
 {
@@ -46,7 +46,7 @@
         <td>
             @src
         </td>
-        <td>
+        <td style="padding:2px">
             <div class="btn-group">
             @Html.ActionLink("提交", "Create","Submit", new { id=item.ID },new {@class="btn btn-default"})
             @if (item.PublicData || isRoot)

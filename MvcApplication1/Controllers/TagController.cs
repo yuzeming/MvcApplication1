@@ -9,7 +9,7 @@ using MvcApplication1.Models;
 
 namespace MvcApplication1.Controllers
 {
-    [Authorize(Roles="admin")]
+    [Authorize(Roles="root")]
     public class TagController : Controller
     {
         private MyDbContext db = new MyDbContext();

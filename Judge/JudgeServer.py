@@ -21,7 +21,7 @@ class PySQOJWebServer(win32serviceutil.ServiceFramework):
         import os
         import inspect
 
-        logger = logging.getLogger('[PythonService]')
+        logger = logging.getLogger('PythonService')
 
         this_file = inspect.getfile(inspect.currentframe())
         dirpath = os.path.abspath(os.path.dirname(this_file))

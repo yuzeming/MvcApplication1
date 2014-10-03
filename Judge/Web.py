@@ -5,8 +5,8 @@ import requests
 import Conf
 __author__ = 'yzm'
 
-url = Conf.WebServer+"/api/Judge"
-DLurl = Conf.WebServer+"/Problem/Downland/%d"
+url = Conf.WebServer+"/api/Judge/"
+DLurl = Conf.WebServer+"/api/Judge/Downland?id=%d"
 
 
 def GetSubmit(jk):

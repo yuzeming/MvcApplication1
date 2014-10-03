@@ -103,6 +103,7 @@ def Judge(s):
         "Result": [],
         "CompilerRes": "",
     }
+    
     try:
         DataRoot = os.path.join(DataDir, str(s["ProbID"]))
         DataConfFile = os.path.join(DataRoot, "config.json")

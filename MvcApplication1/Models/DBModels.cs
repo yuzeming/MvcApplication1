@@ -25,7 +25,8 @@ namespace MvcApplication1.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Submit>().HasOptional(x => x.Belog).WithMany().WillCascadeOnDelete();
+            modelBuilder.Entity<Contest>().HasMany(x => x.ProbList).WithMany();
+            modelBuilder.Entity<Contest>().HasMany(x => x.UserList).WithMany();
         }
 
     }
@@ -102,6 +103,9 @@ namespace MvcApplication1.Models
         public string Lang { get; set; }
 
         [Required]
+        public int ProbID { get; set; }
+
+        [ForeignKey("ProbID")]
         public virtual Problem Prob { get; set; }
 
         public virtual UserProfile User { get; set; }

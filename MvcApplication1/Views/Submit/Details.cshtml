@@ -1,12 +1,12 @@
 ﻿@model MvcApplication1.Models.Submit
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "评测详情";
     bool isRoot = User.IsInRole("admin") || User.IsInRole("root");
     bool ShowSrc = isRoot || Model.User.UserName == User.Identity.Name;
 }
 
-<h2>Details</h2>
+<h2>评测详情</h2>
 
 <table class="table table-striped">
     <tr>
@@ -49,7 +49,7 @@
     else
     {
         <tr>
-            <th colspan="4">空</th>
+            <th colspan="4" style="text-align:center">(空)</th>
         </tr>
     }
 

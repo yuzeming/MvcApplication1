@@ -129,6 +129,11 @@ namespace MvcApplication1.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Contest contest = db.Contests.Find(id);
+            foreach (var x in db.Submits.Where(x => x.Belog.ID == id))
+            {
+                db.Entry(x).Reference(c => c.Belog).CurrentValue = null;
+                db.Entry(x).State = EntityState.Modified;
+            }
             db.Contests.Remove(contest);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -139,13 +144,12 @@ namespace MvcApplication1.Controllers
             var contest = db.Contests.Find(id);
             if (contest == null)
                 return HttpNotFound();
-
             if (!contest.UserList.Any(x => x.UserName == User.Identity.Name))
                 return View("Error", new HttpException(403, "您没有参与这场比赛。"));
             if (contest.State == ContestState.Before)
                 return View("Error", new HttpException(403, "比赛还没有开始"));
             List<JsonContestReslut> res;
-            if (contest.Update || String.IsNullOrWhiteSpace(contest.Result))
+            if (contest.Update || String.IsNullOrWhiteSpace(contest.Result) || type == "csv")
             {
                 res = GetReslutList(contest);
                 contest.Result = JsonConvert.SerializeObject(res);

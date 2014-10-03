@@ -1,7 +1,7 @@
 ﻿@model MvcApplication1.Models.Problem
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "删除题目";
 }
 
 <h2>确认删除一个题目</h2>
@@ -14,6 +14,6 @@
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     <p>
-        <input type="submit" value="删除" class="btn btn-danger"/><b>操作不可以撤销！</b>
+        <input type="submit" value="删除" class="btn btn-danger"/> <b>操作不可以撤销！</b>
     </p>
 }

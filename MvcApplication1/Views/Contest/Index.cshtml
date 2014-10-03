@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<MvcApplication1.Models.Contest>
 @using MvcApplication1.Models
 @{
-    ViewBag.Title = "Index";
-    bool isRoot = User.IsInRole("admin") || User.IsInRole("root");
+    ViewBag.Title = "比赛列表";
+    bool isRoot = User.IsInRole("admin");
 }
 
 <h2>比赛列表</h2>
@@ -28,7 +28,7 @@
             <td>@i.Title <code>@(i.Tag==null?"未分类":i.Tag.Name)</code></td>
             <td>@i.Start ~ @i.End</td>
             <td>@i.State</td>
-            <td>
+            <td style="padding:2px">
                 <div class="btn-group">
                 @if (i.State != ContestState.Before || isRoot)
                 {

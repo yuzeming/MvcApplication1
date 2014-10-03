@@ -1,11 +1,11 @@
 ﻿@model MvcApplication1.FormModels.UploadProblemModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "编辑题目";
     ViewBag.Tip = "不修改数据内容请留空。";
 }
 
-<h2>Edit</h2>
+<h2>编辑题目</h2>
 
 @using (Html.BeginForm("Edit", "Problem", FormMethod.Post, new { enctype = "multipart/form-data", @class = "col-md-4" }))
 {

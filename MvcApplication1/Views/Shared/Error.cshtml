@@ -1,7 +1,7 @@
 ﻿@model System.Web.HttpException
 
 @{
-    ViewBag.Title = "Sorry.";
+    ViewBag.Title = "出错了";
     Response.StatusCode = Model.GetHttpCode();
 }
 
@@ -9,4 +9,3 @@
 <div class="well">
     @Model.Message.ToString()
 </div>
-

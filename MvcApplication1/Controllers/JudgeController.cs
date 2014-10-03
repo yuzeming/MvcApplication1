@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -11,6 +12,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using AutoMapper;
 using MvcApplication1.Models;
+using MvcApplication1.Controllers;
+using System.Net.Http.Headers;
 
 namespace MvcApplication1.Controllers
 {
@@ -87,10 +90,28 @@ namespace MvcApplication1.Controllers
             return new HttpResponseMessage(HttpStatusCode.OK); ;
         }
 
+        [System.Web.Mvc.ActionName("downland")]
+        public HttpResponseMessage GetProblemData(int id)
+        {
+            Problem problem = db.Problems.Find(id);
+          
+            var file = HelperFunc.GetZipPath(id);
+            var stream = new FileStream(file, FileMode.Open);
+            var content = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StreamContent(stream)
+            };
+            content.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
+            return content;
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
             base.Dispose(disposing);
         }
+
+
     }
 }

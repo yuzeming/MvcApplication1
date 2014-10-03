@@ -1,12 +1,12 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
-    bool isRoot = User.IsInRole("admin") || User.IsInRole("root");
+    ViewBag.Title = "欢迎";
+    bool isRoot = User.IsInRole("admin");
 }
 
 
 @if (User.Identity.IsAuthenticated)
 {
-    <h1>Welcome Back.</h1>
+    <h2>欢迎 @User.Identity.Name</h2>
     <h4>正在进行的比赛</h4>
     <ul>
         @foreach (var x in ViewBag.c)
@@ -24,7 +24,7 @@ else
 }
 @if (isRoot)
 {
-    <h2>管理员</h2>
+    <h2>管理员面板</h2>
     @Html.ActionLink("批量添加用户", "UserImport", "Account",null, new { @class = "btn btn-default" })
     @Html.ActionLink("修改密码", "SetPassword", "Account",null, new { @class = "btn btn-default" })
     @Html.ActionLink("分类管理", "Index","Tag",null, new { @class = "btn btn-default" })

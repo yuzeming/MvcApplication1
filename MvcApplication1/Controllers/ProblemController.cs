@@ -33,7 +33,7 @@ namespace MvcApplication1.Controllers
                 .ToDictionary(y => y.Prob.ID);
             ViewBag.Record = tmp;
             var query = db.Problems.AsQueryable();
-            if (User.Identity.Name != "root")
+            if (!User.IsInRole("admin"))
                 query = query.Where(x => x.Public);
             if (tag != 0)
                 query = query.Where(x => x.Tag.ID == tag);
@@ -61,11 +61,12 @@ namespace MvcApplication1.Controllers
                 
                 return View(problem);
             }
-            if (User.Identity.Name == "root" || problem.Public)
+            if (User.IsInRole("admin") || problem.Public)
                 return View(problem);
             return View("Error", new HttpException(403, "题目是隐藏的。请尝试使用管理员账号登陆。"));
         }
 
+        [Authorize(Roles="admin")]
         public ActionResult Create()
         {
             ViewBag.tagList = new SelectList(db.Tags, "ID", "Name");
@@ -74,32 +75,29 @@ namespace MvcApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public ActionResult Create(UploadProblemModel form)
         {
             Mapper.CreateMap<UploadProblemModel,Problem>()
                 .ForMember( x => x.Tag , s => s.Ignore());
             var tmp = Mapper.Map<Problem>(form);
             tmp.Tag = db.Tags.Find(form.Tag);
-            if (form.File != null)
-            {
-                ReadConfig(ref tmp,form.File.InputStream);
-            }
-            else
-            {
-                ModelState.AddModelError("File","必须选择一个数据文件。");
-            }
+            if (form.File == null || !HelperFunc.ReadConfig(ref tmp, form.File.InputStream))
+                ModelState.AddModelError("File","必须选择一个有效的数据文件。");
+
             if (ModelState.IsValid)
             {
-                tmp.CheckSum = HashFile(form.File.InputStream);
+                tmp.CheckSum = HelperFunc.HashFile(form.File.InputStream);
                 db.Problems.Add(tmp);
                 db.SaveChanges();
-                form.File.SaveAs(GetZipPath(tmp.ID));
+                form.File.SaveAs(HelperFunc.GetZipPath(tmp.ID));
                 return RedirectToAction("Index");
             }
             ViewBag.tagList = new SelectList(db.Tags, "ID", "Name", form.Tag);
             return View(form);
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(int id = 0)
         {
             var problem = db.Problems.Find(id);
@@ -114,31 +112,29 @@ namespace MvcApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(UploadProblemModel form,int id = 0)
         {
             var prob = db.Problems.Find(id);
             if (prob == null)
-            {
                 return HttpNotFound();
-            }
             if (form.File != null)
-            {
-                ReadConfig(ref prob, form.File.InputStream);
-            }
+                if(!HelperFunc.ReadConfig(ref prob, form.File.InputStream))
+                    ModelState.AddModelError("File", "必须选择一个有效的数据文件。");
+
             if (ModelState.IsValid)
             {
                 prob.Title = form.Title;
                 prob.Public = form.Public;
                 prob.PublicData = form.PublicData;
-                prob.Tag = ( form.Tag == 0 ? null : db.Tags.Find(form.Tag) );
+                prob.Tag = db.Tags.Find(form.Tag) ;
                 if (form.File != null)
                 {
-                    prob.CheckSum = HashFile(form.File.InputStream);
-                    System.IO.File.Delete(GetZipPath(id));
-                    form.File.SaveAs(GetZipPath(id));
+                    prob.CheckSum = HelperFunc.HashFile(form.File.InputStream);
+                    System.IO.File.Delete(HelperFunc.GetZipPath(id));
+                    form.File.SaveAs(HelperFunc.GetZipPath(id));
                 }
                 db.Entry(prob).State = EntityState.Modified;
-                //db.Problems.AddOrUpdate(prob);
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -147,6 +143,7 @@ namespace MvcApplication1.Controllers
             return View(form);
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(int id = 0)
         {
             Problem problem = db.Problems.Find(id);
@@ -158,25 +155,37 @@ namespace MvcApplication1.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Problem problem = db.Problems.Find(id);
             db.Problems.Remove(problem);
             db.SaveChanges();
-            System.IO.File.Delete(GetZipPath(id));
+            System.IO.File.Delete(HelperFunc.GetZipPath(id));
             return RedirectToAction("Index");
         }
 
-        [AllowAnonymous]
         public ActionResult Downland(int id)
         {
             Problem problem = db.Problems.Find(id);
-            if (problem != null)
+            if (problem == null)
+                return HttpNotFound();
+            if (problem.PublicData || User.IsInRole("admin"))
+                return File(HelperFunc.GetZipPath(id), "application/zip", id.ToString() + ".zip");
+            return View("Error", new HttpException(403, "没有权限下载数据"));
+        }
+
+        public ActionResult file(int id,string fn)
+        {
+            Problem problem = db.Problems.Find(id);
+            if (problem == null)
+                return HttpNotFound();
+            if (problem.Public || User.IsInRole("admin"))
             {
-                return File(GetZipPath(id), "application/zip", id.ToString() + ".zip");
+                return Content(id.ToString()+" "+fn);
             }
-            return HttpNotFound();
+            return View("Error", new HttpException(403, "题目是隐藏的。请尝试使用管理员账号登陆。"));
         }
 
         protected override void Dispose(bool disposing)
@@ -185,59 +194,5 @@ namespace MvcApplication1.Controllers
             base.Dispose(disposing);
         }
 
-        #region 帮助程序
-
-        [NonAction]
-        public string ReadZip(ZipArchive zip, string path)
-        {
-            var entry = zip.GetEntry(path);
-            if (entry == null)
-                return null;
-            var reader = new StreamReader(entry.Open());
-            var content = reader.ReadToEnd();
-            reader.Close();
-            return content;
-        }
-
-        [NonAction]
-        public string GetZipPath(int id)
-        {
-            string path = Server.MapPath("~/Problems");
-            string fn = System.IO.Path.Combine(path, id.ToString() + ".zip");
-
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-            return fn;
-        }
-
-        [NonAction]
-        public void ReadConfig(ref Problem tmp,Stream file)
-        {
-            try
-            {
-                var zip = new ZipArchive(file, ZipArchiveMode.Read);
-                if (string.IsNullOrWhiteSpace(tmp.Title))
-                {
-                    JsonConfig cfg = JsonConvert.DeserializeObject<JsonConfig>(ReadZip(zip, "config.json"));
-                    tmp.Title = cfg.Title;
-                }
-                tmp.Description = ReadZip(zip, "prob.html");
-               // tmp.Solution = ReadZip(zip, "solve.html");
-            }
-            catch (InvalidDataException) 
-            {
-                ModelState.AddModelError("File", "请上传 ZIP 格式的压缩包");
-            }
-        }
-
-        [NonAction]
-        public string HashFile(Stream f)
-        {
-            f.Seek(0, SeekOrigin.Begin);
-            var Cng = new SHA256Cng();
-            var x = Cng.ComputeHash(f);
-            return BitConverter.ToString(x).Replace("-", "").ToLower();
-        }
-        #endregion
     }
 }

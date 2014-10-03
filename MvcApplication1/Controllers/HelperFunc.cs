@@ -32,6 +32,62 @@ namespace MvcApplication1.Controllers
             db.Dispose();
             return ret;
         }
+
+        public static string ReadZip(ZipArchive zip, string path)
+        {
+            var entry = zip.GetEntry(path);
+            if (entry == null)
+                return null;
+            var reader = new StreamReader(entry.Open());
+            var content = reader.ReadToEnd();
+            reader.Close();
+            return content;
+        }
+
+        public static Stream ReadZipStream(ZipArchive zip, string path)
+        {
+            var entry = zip.GetEntry(path);
+            if (entry == null)
+                return null;
+            return entry.Open();
+        }
+
+        public static string HashFile(Stream f)
+        {
+            f.Seek(0, SeekOrigin.Begin);
+            var Cng = new SHA256Cng();
+            var x = Cng.ComputeHash(f);
+            return BitConverter.ToString(x).Replace("-", "").ToLower();
+        }
+
+        public static string GetZipPath(int id)
+        {
+            string path = HttpContext.Current.Server.MapPath("~/Problems");
+            string fn = System.IO.Path.Combine(path, id.ToString() + ".zip");
+
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+            return fn;
+        }
+
+        public static bool ReadConfig(ref Problem tmp, Stream file)
+        {
+            try
+            {
+                var zip = new ZipArchive(file, ZipArchiveMode.Read);
+                if (string.IsNullOrWhiteSpace(tmp.Title))
+                {
+                    JsonConfig cfg = JsonConvert.DeserializeObject<JsonConfig>(HelperFunc.ReadZip(zip, "config.json"));
+                    tmp.Title = cfg.Title;
+                }
+                tmp.Description = HelperFunc.ReadZip(zip, "prob.html");
+            }
+            catch (InvalidDataException)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 
 }

@@ -1,7 +1,7 @@
 ﻿@model MvcApplication1.FormModels.SubmitSearchModel
 @using MvcApplication1.Models
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "所有提交";
     bool isRoot = User.IsInRole("admin") || User.IsInRole("root");
 }
 
@@ -85,7 +85,7 @@
                 @item.Score
             </td>
         }
-        <td>
+        <td style="padding:2px">
             <div class="btn-group">
             @Html.ActionLink("Details", "Details", new { id=item.ID },new {@class="btn btn-default"})
             @if (isRoot)

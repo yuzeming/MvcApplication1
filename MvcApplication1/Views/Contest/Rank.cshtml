@@ -1,12 +1,12 @@
 ﻿@model List<MvcApplication1.FormModels.JsonContestReslut>
 
 @{
-    ViewBag.Title = ViewBag.CTitle + "Rank";
+    ViewBag.Title = ViewBag.CTitle + " - 比赛排名";
 }
 
-<h2>@ViewBag.CTitle 比赛排名</h2>
+<h2>@ViewBag.CTitle - 比赛排名</h2>
 @Html.ActionLink("导出", "Rank", new { @id = ViewBag.C, type = "csv", }, new { @class = "btn btn-default" })
-<p class="help-block">由于Excal不能直接打开UTF8编码的CSV文件,请使用文本编辑器转换编码。 </p>
+<p class="help-block">由于Excal不能直接打开UTF-8编码的CSV文件，请使用文本编辑器转换编码。 </p>
 <table class="table table-striped">
     <tr>
         <th>用户名</th>
