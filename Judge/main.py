@@ -175,7 +175,8 @@ def Judge(s):
                                 DataRes[1] = u"PartiallyCorrect " + DataRes[1]
                     #Clean up
                     DelFile(OutputFileName)
-            Ret["State"] = Ret["State"] or (DataRes[1].split()[0])
+            if (DataRes[1].split()[0]!=u"Accepted" and not Ret["State"] ):
+                Ret["State"] = DataRes[1].split()[0]
             Ret["Score"] += DataRes[0]
             Ret["Result"].append(DataRes)
         DelFile(Exe)
