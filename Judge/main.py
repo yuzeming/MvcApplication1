@@ -169,7 +169,7 @@ def Judge(s):
                             DataRes[1] = strip(tmpList[1])
                             if tmpList[0] == 1:
                                 DataRes[1] = u"Accepted "+DataRes[1]
-                            elif tmpList[0] == 1:
+                            elif tmpList[0] == 0:
                                 DataRes[1] = u"WrongAnswer " + DataRes[1]
                             else:
                                 DataRes[1] = u"PartiallyCorrect " + DataRes[1]
