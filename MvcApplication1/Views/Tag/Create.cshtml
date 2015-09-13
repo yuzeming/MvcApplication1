@@ -1,32 +1,23 @@
 ﻿@model MvcApplication1.Models.Tag
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "新建分类";
 }
 
-<h2>Create</h2>
+<h2>新建分类</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("Create", "Tag", FormMethod.Post, new { enctype = "multipart/form-data", @class = "col-md-6" })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>Tag</legend>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
-        </div>
-        <div class="editor-field">
+    <div class="form-group">
+            <label for="Tag">标签名称</label>
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
-        </div>
+    </div>
 
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
+    <p>
+        <input type="submit" value="新建" class="btn btn-success" />
+    </p>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

@@ -1,26 +1,18 @@
 ﻿@model MvcApplication1.Models.Tag
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "删除分类";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<fieldset>
-    <legend>Tag</legend>
-    <b>必须先删除所有带有这个标签的题目，或者将这些题目切换到其他标签上。</b>
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
-    </div>
-</fieldset>
-@using (Html.BeginForm()) {
+<h2>删除分类</h2>
+<div class="well">
+    @Html.DisplayFor(model => model.Name)
+</div>
+<b>必须先删除所有带有这个标签的题目，或者将这些题目切换到其他标签上。</b>
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     <p>
-        <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Back to List", "Index")
+        <input type="submit" value="删除" class="btn btn-danger" /> <b>操作不可以撤销！</b>
     </p>
 }
