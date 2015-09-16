@@ -21,12 +21,12 @@ namespace MvcApplication1.Controllers
 {
     public static  class HelperFunc
     {
-        public static List<SelectListItem> GetTagList(int nowselect = 0)
+        public static List<SelectListItem> GetTagList(int nowselect = 0,String ZeroText = "(全部)")
         {
             var db = new MyDbContext();
             var tags = db.Tags.ToList();
             var ret = new List<SelectListItem>();
-            ret.Add(new SelectListItem() { Value = "0", Text = "(全部)", Selected = (nowselect == 0) });
+            ret.Add(new SelectListItem() { Value = "0", Text = ZeroText, Selected = (nowselect == 0) });
             foreach (var x in tags)
                 ret.Add(new SelectListItem() { Value = x.ID.ToString(), Text = x.Name, Selected = (nowselect == x.ID) });
             db.Dispose();
@@ -74,13 +74,22 @@ namespace MvcApplication1.Controllers
         {
             try
             {
+                tmp.FileList = new List<String>();
                 var zip = new ZipArchive(file, ZipArchiveMode.Read);
                 if (string.IsNullOrWhiteSpace(tmp.Title))
                 {
                     JsonConfig cfg = JsonConvert.DeserializeObject<JsonConfig>(HelperFunc.ReadZip(zip, "config.json"));
                     tmp.Title = cfg.Title;
                 }
+                foreach (var entry in zip.Entries)
+                {
+                    if (entry.FullName.StartsWith("file/",StringComparison.OrdinalIgnoreCase) && entry.FullName.Length > 5)
+                    {
+                        tmp.FileList.Add(entry.FullName);
+                    }
+                }
                 tmp.Description = HelperFunc.ReadZip(zip, "prob.html");
+                tmp.Solution = HelperFunc.ReadZip(zip, "solve.html");
             }
             catch (InvalidDataException)
             {

@@ -1,0 +1,11 @@
+﻿@model MvcApplication1.Models.Problem
+@using MvcApplication1.Models
+@{
+    ViewBag.Title = Model.Title+" 题解";
+    bool Disable = ViewBag.ContState != null && (ContestState)ViewBag.ContState == ContestState.Past;
+}
+
+<h1>@Model.Title 题解</h1>
+<div class="col-md-12">
+    @Html.Raw(@Model.Solution)
+</div>

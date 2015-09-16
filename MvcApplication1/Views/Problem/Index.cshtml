@@ -53,9 +53,16 @@
             {
                 @Html.ActionLink("下载数据", "Downland", new { id=item.ID },new {@class="btn btn-default"})
             }
+
+            @if (item.PublicSolution || isRoot)
+            {
+                @Html.ActionLink("题解", "Solution", new { id = item.ID }, new { @class = "btn btn-default" })
+            }
+
             @if (isRoot)
             {
                 @Html.ActionLink("编辑", "Edit", new { id=item.ID },new {@class="btn btn-default"})
+                @Html.ActionLink("编辑HTML", "EditHTML", new { id = item.ID }, new { @class = "btn btn-default" })
                 @Html.ActionLink("删除", "Delete", new { id=item.ID },new {@class="btn btn-danger"})
             }
 

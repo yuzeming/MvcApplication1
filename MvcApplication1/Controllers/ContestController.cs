@@ -50,7 +50,7 @@ namespace MvcApplication1.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
-            ViewBag.tagList = new SelectList(db.Tags, "ID", "Name");
+            ViewBag.tagList =new System.Web.Mvc.SelectList(HelperFunc.GetTagList(0,"(未分类)"));
             return View(new ContestFormModel());
         }
 
@@ -66,7 +66,7 @@ namespace MvcApplication1.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.tagList = new SelectList(db.Tags, "ID", "Name",form.Tag);
+            ViewBag.tagList = HelperFunc.GetTagList(form.Tag, "(未分类)");
             return View(form);
         }
 
@@ -78,7 +78,7 @@ namespace MvcApplication1.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.tagList = new SelectList(db.Tags, "ID", "Name",contest.Tag.ID);
+            ViewBag.tagList = HelperFunc.GetTagList(contest.Tag == null ? 0 : contest.Tag.ID, "(未分类)");
             return View(Mapper.Map<ContestFormModel>(contest));
         }
 
@@ -98,8 +98,10 @@ namespace MvcApplication1.Controllers
                 tmp.ProbList.Add(p);
 
             tmp.UserList.Clear();
-            foreach (var p in GetUserList(form))
-                tmp.UserList.Add(p);
+            var list = GetUserList(form);
+            if (list!= null)
+                foreach (var p in list)
+                    tmp.UserList.Add(p);
 
             tmp.Update = true;
             if (ModelState.IsValid)
@@ -108,7 +110,7 @@ namespace MvcApplication1.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.tagList = new SelectList(db.Tags, "ID", "Name",form.Tag);
+            ViewBag.tagList = HelperFunc.GetTagList(form.Tag, "(未分类)");
             return View(form);
         }
 

@@ -1,0 +1,25 @@
+﻿@model MvcApplication1.Models.Problem
+@using MvcApplication1.Models
+@{
+    ViewBag.Title = "编辑";
+}
+
+<h1>@Model.Title</h1>
+@using (Html.BeginForm("EditHTML", "Problem", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div>
+        <h3>题目描述</h3>
+        @Html.TextAreaFor(m => m.Description, new { rows = "50", cols = "80", @id = "prob" })
+    </div>
+    <div>
+        <h3>题解</h3>
+        @Html.TextAreaFor(m => m.Solution, new { rows = "50", cols = "80", @id = "solve" })
+    </div>
+    <input type="submit" value="保存" class="btn btn-default btn-lg" />
+    <p>这不会更新ZIP压缩包</p>
+}
+<script>
+    CKEDITOR.replace('prob');
+    CKEDITOR.replace('solve');
+</script>

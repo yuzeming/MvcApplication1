@@ -1,6 +1,6 @@
 ﻿@model MvcApplication1.FormModels.UploadProblemModel
 @{
-    SelectList tagList =ViewBag.tagList;
+    var tagList = (List<SelectListItem>)ViewBag.tagList;
 }
 <div class="form-group">
     @Html.LabelFor( m => m.File)

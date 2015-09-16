@@ -83,7 +83,7 @@ void writesol()
 		}
 		while (1);
 	}
-	for (i = sol[0]; i; i--, fprintf(f, " "))
+	for (i = sol[0]; i; i--, printf(" "))
 		for (j = 1; j <= len(sol[i]); j++)
 			printf("%c", cuv[pozcuv[sol[i]] + j - 1]);
 	printf("\n");

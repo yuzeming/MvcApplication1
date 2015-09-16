@@ -7,12 +7,18 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
     
+    <script src="/ckeditor/ckeditor.js"></script>
+    <link href="/ckeditor/plugins/codesnippet/lib/highlight/styles/default.css" rel="stylesheet">
+    <script src="/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js"></script>
+
     @Styles.Render("~/Content/bootstrap.css")
     @Styles.Render("~/Content/Site.css")
 
+
     @Scripts.Render("~/Scripts/jquery-1.8.2.js")
     @Scripts.Render("~/Scripts/bootstrap.js")
-    
+
+
 </head>
 <body>
 
@@ -43,7 +49,6 @@
             <div class="row">
                 <p class="list-inline text-center">
                     服务器时间 @DateTime.Now
-                    <a href="https://github.com/yuzeming/MvcApplication1">Github</a>
                     <a href="mailto:yuzeming@gmail.com?subject='数据报错'">数据报错</a>
 
                 </p>
@@ -52,5 +57,6 @@
     </footer>
 
     @RenderSection("scripts", required: false)
+    <script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>

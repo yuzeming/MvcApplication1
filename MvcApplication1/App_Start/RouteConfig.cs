@@ -14,10 +14,21 @@ namespace MvcApplication1
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}/",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                name: "ProblemContest",
+                url: "{controller}/{id}/{action}/{fn}",
+                defaults: new {  fn = UrlParameter.Optional },
+                constraints: new { id = @"\d+" , controller = "Problem|Contest|Submit", }
             );
+
+            routes.MapRoute(
+                name: "Default1",
+                url: "{controller}/{action}/",
+                defaults: new { controller = "Home", action = "Index" }
+            );
+
+
+
+
 
         }
     }

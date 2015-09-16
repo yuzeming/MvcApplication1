@@ -61,15 +61,27 @@ namespace MvcApplication1.Controllers
                 
                 return View(problem);
             }
+
             if (User.IsInRole("admin") || problem.Public)
                 return View(problem);
             return View("Error", new HttpException(403, "题目是隐藏的。请尝试使用管理员账号登陆。"));
         }
 
+        public ActionResult Solution(int id = 0)
+        {
+            Problem problem = db.Problems.Find(id);
+            if (problem == null)
+                return HttpNotFound();
+
+            if (User.IsInRole("admin") || problem.PublicSolution)
+                return View(problem);
+            return View("Error", new HttpException(403, "题解是隐藏的。请尝试使用管理员账号登陆。"));
+        }
+
         [Authorize(Roles="admin")]
         public ActionResult Create()
         {
-            ViewBag.tagList = new SelectList(db.Tags, "ID", "Name");
+            ViewBag.tagList = HelperFunc.GetTagList(0, "(未分类)");
             return View(new UploadProblemModel());
         }
 
@@ -93,7 +105,7 @@ namespace MvcApplication1.Controllers
                 form.File.SaveAs(HelperFunc.GetZipPath(tmp.ID));
                 return RedirectToAction("Index");
             }
-            ViewBag.tagList = new SelectList(db.Tags, "ID", "Name", form.Tag);
+            ViewBag.tagList = HelperFunc.GetTagList(form.Tag, "(未分类)");
             return View(form);
         }
 
@@ -106,7 +118,7 @@ namespace MvcApplication1.Controllers
             Mapper.CreateMap<Problem,UploadProblemModel>()
                 .ForMember(x => x.Tag, s => s.MapFrom(y => y==null?0:y.Tag.ID));
             var tmp = Mapper.Map<UploadProblemModel>(problem);
-            ViewBag.tagList = new SelectList(db.Tags, "ID", "Name", tmp.Tag);
+            ViewBag.tagList = HelperFunc.GetTagList(problem.Tag == null ? 0 : problem.Tag.ID, "(未分类)");
             return View(tmp);
         }
 
@@ -139,7 +151,7 @@ namespace MvcApplication1.Controllers
 
                 return RedirectToAction("Index");
             }
-            ViewBag.tagList = new SelectList(db.Tags, "ID", "Name", form.Tag);
+            ViewBag.tagList = HelperFunc.GetTagList(form.Tag, "(未分类)");
             return View(form);
         }
 
@@ -183,9 +195,41 @@ namespace MvcApplication1.Controllers
                 return HttpNotFound();
             if (problem.Public || User.IsInRole("admin"))
             {
-                return Content(id.ToString()+" "+fn);
+                var zip = ZipFile.OpenRead(HelperFunc.GetZipPath(id));
+                var stream =  HelperFunc.ReadZipStream(zip,"file/"+fn);
+                if (stream== null)
+                    return HttpNotFound();
+                return File(stream, "application/octet-stream",fn);
+
             }
             return View("Error", new HttpException(403, "题目是隐藏的。请尝试使用管理员账号登陆。"));
+        }
+
+
+        [Authorize(Roles = "admin")]
+        public ActionResult EditHTML(int id = 0)
+        {
+            var problem = db.Problems.Find(id);
+            if (problem == null)
+                return HttpNotFound();
+
+            return View(problem);
+        }
+
+        [HttpPost, ActionName("EditHTML")]
+        [Authorize(Roles = "admin")]
+        [ValidateInput(false)]
+        public ActionResult EditHTMLPost(int id = 0)
+        {
+            var problem = db.Problems.Find(id);
+            if (problem == null)
+                return HttpNotFound();
+            problem.Description = Request.Unvalidated.Form.Get("Description");
+            problem.Solution = Request.Unvalidated.Form.Get("Solution");
+            db.Entry(problem).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Details");
         }
 
         protected override void Dispose(bool disposing)

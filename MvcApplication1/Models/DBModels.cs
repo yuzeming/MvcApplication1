@@ -6,7 +6,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
 using System.Data.Entity.ModelConfiguration.Conventions;
-
+using Newtonsoft.Json;
 
 namespace MvcApplication1.Models
 {
@@ -27,6 +27,7 @@ namespace MvcApplication1.Models
         {
             modelBuilder.Entity<Contest>().HasMany(x => x.ProbList).WithMany();
             modelBuilder.Entity<Contest>().HasMany(x => x.UserList).WithMany();
+       
         }
 
     }
@@ -59,6 +60,9 @@ namespace MvcApplication1.Models
         public bool Public { set; get; }
 
         [Required]
+        public bool PublicSolution { set; get; }
+
+        [Required]
         public bool PublicData { set; get; }
 
         [Required]
@@ -67,6 +71,25 @@ namespace MvcApplication1.Models
         [Required]
         public string Description { set; get; }
 
+        public string Solution { set; get; }
+
+        public String FileListString
+        {
+            get
+            {
+                return JsonConvert.SerializeObject(FileList);
+            }
+            set
+            {
+                FileList=JsonConvert.DeserializeObject<IList<string>>(value);
+            }
+        }
+
+        [NotMapped]
+        public IList<String> FileList { set; get; }
+
+
+        
         public virtual Tag Tag { get; set; }
     }
 
