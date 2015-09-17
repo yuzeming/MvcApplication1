@@ -1,7 +1,7 @@
 ﻿@model MvcApplication1.Models.Problem
 @using MvcApplication1.Models
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "["+Model.ID+"] "+Model.Title;
     bool Disable = ViewBag.ContState != null && (ContestState)ViewBag.ContState == ContestState.Past;
 }
 
@@ -12,7 +12,7 @@
 <div class="col-md-3">
     @if (ViewBag.ContTitle!=null)
     {
-        <p>比赛:@ViewBag.ContTitle</p>
+        <div class="alert alert-warning text-center" >比赛: @ViewBag.ContTitle</div>
     } 
     @if (Disable)
     {
@@ -24,6 +24,10 @@
     {
         @Html.ActionLink("Submit", "Create","Submit", new { id=Model.ID ,c = ViewBag.c},new { @class = "btn btn-primary btn-block" })
     }
+    @if (Model.PublicSolution && !string.IsNullOrWhiteSpace(Model.Solution))
+    {
+        @Html.ActionLink("题解", "Solution", new { id = Model.ID }, new { @class = "btn btn-default  btn-block" })
+    }
     @if (Model.FileList!=null)
     {
         <h3>附件列表：</h3>
@@ -34,6 +38,8 @@
             }
         </div>
     }
+
+
 
     <h3>校验和：</h3>
     <pre>@Model.CheckSum</pre>

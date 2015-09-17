@@ -37,24 +37,27 @@
         </td>
         <td>
             @Html.ActionLink(item.Title, "Details", new { id=item.ID })
-            <code>@(item.Tag == null ? "(未分类)" : item.Tag.Name)</code>
+            @if (item.Tag != null)
+            {
+                <span class="label label-info">@item.Tag.Name</span>
+            }
             @if (!item.Public)
             {
-                <code>隐藏</code>
+                <span class="label label-danger">隐藏</span>
             }
         </td>
         <td>
             @src
         </td>
-        <td style="padding:2px">
-            <div class="btn-group">
+        <td style="padding:3px;" >
+            <div class="btn-group" style="float:right;">
             @Html.ActionLink("提交", "Create","Submit", new { id=item.ID },new {@class="btn btn-default"})
             @if (item.PublicData || isRoot)
             {
                 @Html.ActionLink("下载数据", "Downland", new { id=item.ID },new {@class="btn btn-default"})
             }
 
-            @if (item.PublicSolution || isRoot)
+            @if ( (item.PublicSolution || isRoot) && !string.IsNullOrWhiteSpace(item.Solution))
             {
                 @Html.ActionLink("题解", "Solution", new { id = item.ID }, new { @class = "btn btn-default" })
             }

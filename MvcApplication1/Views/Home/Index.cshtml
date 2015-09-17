@@ -6,17 +6,24 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <h2>欢迎 @User.Identity.Name</h2>
-    <h4>正在进行的比赛</h4>
-    <ul>
-        @foreach (var x in ViewBag.c)
-        {
-            <li>
-                @Html.ActionLink((String)x.Title, "Details", "Contest", new { @id = (int)x.ID }, null)
-            </li>
-        }
+    <h3>欢迎 @User.Identity.Name</h3>
+    if (ViewBag.c.Count > 0)
+    {
+
+            <h2>正在进行的比赛</h2>
+            <ul class="list-group">
+                @foreach (var x in ViewBag.c)
+                {
+                    <li class="list-group-item">
+                        <h4 class="list-group-item-heading">@Html.ActionLink((String)x.Title, "Details", "Contest", new { @id = (int)x.ID },null)</h4>
+                        <p  class="list-group-item-text">将于 @x.End 结束</p>
+                    </li>
+                }
+
+            </ul>
+
+    }
     
-    </ul>
 }
 else
 {
@@ -25,7 +32,7 @@ else
 @if (isRoot)
 {
     <h2>管理员面板</h2>
-    @Html.ActionLink("批量添加用户", "UserImport", "Account",null, new { @class = "btn btn-default" })
-    @Html.ActionLink("修改密码", "SetPassword", "Account",null, new { @class = "btn btn-default" })
-    @Html.ActionLink("分类管理", "Index","Tag",null, new { @class = "btn btn-default" })
+    @Html.ActionLink("批量添加用户", "UserImport", "Account", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("修改密码", "SetPassword", "Account", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("分类管理", "Index", "Tag", null, new { @class = "btn btn-default" })
 }

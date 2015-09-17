@@ -25,11 +25,17 @@
     {
         <tr>
             <td>@i.ID</td>
-            <td>@i.Title <code>@(i.Tag==null?"未分类":i.Tag.Name)</code></td>
+            <td>
+                @i.Title
+                @if (i.Tag != null)
+                {
+                    <span class="label label-info">@i.Tag.Name</span>
+                }
+            </td>
             <td>@i.Start ~ @i.End</td>
             <td>@i.State</td>
-            <td style="padding:2px">
-                <div class="btn-group">
+            <td style="padding:3px">
+                <div class="btn-group"  style="float:right;">
                 @if (i.State != ContestState.Before || isRoot)
                 {
                     @Html.ActionLink("进入","Details",new { id =i.ID },new {@class="btn btn-default"})

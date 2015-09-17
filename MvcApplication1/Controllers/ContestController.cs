@@ -50,7 +50,7 @@ namespace MvcApplication1.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
-            ViewBag.tagList =new System.Web.Mvc.SelectList(HelperFunc.GetTagList(0,"(未分类)"));
+            ViewBag.tagList =HelperFunc.GetTagList(0,"(未分类)");
             return View(new ContestFormModel());
         }
 
@@ -92,7 +92,11 @@ namespace MvcApplication1.Controllers
             tmp.End = form.End;
             tmp.Start = form.Start;
             tmp.Public = form.Public;
-            tmp.Tag = db.Tags.Find(form.Tag);
+            tmp.PublicData = form.PublicData;
+            tmp.PublicSolution = form.PublicSolution;
+            //tmp.Tag = db.Tags.Find(form.Tag);
+            db.Entry(tmp).Reference( m => m.Tag).CurrentValue = db.Tags.Find(form.Tag);
+
             tmp.ProbList.Clear();
             foreach (var p in GetProbList(form))
                 tmp.ProbList.Add(p);
@@ -210,6 +214,8 @@ namespace MvcApplication1.Controllers
             tmp.Start = form.Start;
             tmp.End = form.End;
             tmp.Public = form.Public;
+            tmp.PublicData = form.PublicData;
+            tmp.PublicSolution = form.PublicSolution;
             tmp.ProbList = GetProbList(form);
             tmp.UserList = GetUserList(form);
             tmp.Tag = db.Tags.Find(form.Tag);
@@ -226,7 +232,7 @@ namespace MvcApplication1.Controllers
             var q = db.Submits.AsQueryable();
             if (cont != null)
             {
-                q.Where(x => x.Belog == cont);
+                q = q.Where(x => x.Belog.ID == cont.ID);
                 if (prob == null)
                     prob = cont.ProbList.OrderBy( x => x.ID).ToList();
                 if (user == null)
@@ -238,17 +244,18 @@ namespace MvcApplication1.Controllers
                 var qu = q.Where(x => x.User.UserId == u.UserId);
                 foreach (var p in prob)
                 {
-                    var qp = qu.Where(x => x.Prob.ID == p.ID).OrderByDescending(x => x.ID).OrderBy(x => x.State).FirstOrDefault();
-                    if (qp == null)
+                    var qp = qu.Where(x => x.Prob.ID == p.ID).OrderByDescending(x => x.ID).OrderBy(x => x.State);
+                    if (!qp.Any())
                         tmp.Details.Add("(未提交)");
                     else
                     {
-                        if (qp.State == SubmitState.Running || qp.State == SubmitState.Waiting)
-                            tmp.Details.Add(qp.State.ToString());
+                        var d = qp.First();
+                        if (d.State == SubmitState.Running || d.State == SubmitState.Waiting)
+                            tmp.Details.Add(d.State.ToString());
                         else
                         {
-                            tmp.Details.Add(qp.State.ToString() + " (" + qp.Score + ")");
-                            tmp.Src += qp.Score;
+                            tmp.Details.Add(d.State.ToString() + " (" + d.Score + ")");
+                            tmp.Src += d.Score;
                         }
                     }
                 }

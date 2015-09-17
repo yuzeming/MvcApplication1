@@ -8,14 +8,35 @@
     @Html.ValidationMessageFor(model => model.Title)
 </div>
 
-@*<div class="form-group">
+<div class="form-group">
     <div class="checkbox">
         <label>
             @Html.CheckBoxFor( m => m.Public)
             @Html.LabelFor( m => m.Public)
         </label>
     </div>
-</div>*@
+</div>
+
+
+<div class="form-group">
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.PublicData)
+            @Html.LabelFor(m => m.PublicData)
+        </label>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(m => m.PublicSolution)
+            @Html.LabelFor(m => m.PublicSolution)
+        </label>
+    </div>
+</div>
+
 
 <div class="form-group">
     @Html.LabelFor(Model => Model.Start)

@@ -4,7 +4,8 @@
     ViewBag.Title = "提交代码";
 }
 
-<h2>提交代码</h2>
+<h2>提交代码
+</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -21,9 +22,9 @@
             <label>题目</label>
             <p class="form-control-static">
                 @ViewBag.ProbTitle
-                @if (ViewBag.ContTitle !=null)
+                @if (ViewBag.ContTitle != null)
                 {
-                    <code>这份代码将提交到比赛 @ViewBag.ContTitle</code>
+                    <span class="text-danger text-center">提交到比赛 @ViewBag.ContTitle</span>
                 }
             </p>
             

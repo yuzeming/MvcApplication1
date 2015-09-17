@@ -78,6 +78,19 @@ namespace MvcApplication1.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Tag tag = db.Tags.Find(id);
+
+            foreach (var x in db.Problems.Where(x => x.Tag.ID == id))
+            {
+                db.Entry(x).Reference(c => c.Tag).CurrentValue = null;
+                db.Entry(x).State = EntityState.Modified;
+            }
+
+            foreach (var x in db.Contests.Where(x => x.Tag.ID == id))
+            {
+                db.Entry(x).Reference(c => c.Tag).CurrentValue = null;
+                db.Entry(x).State = EntityState.Modified;
+            }
+
             db.Tags.Remove(tag);
             db.SaveChanges();
             return RedirectToAction("Index");

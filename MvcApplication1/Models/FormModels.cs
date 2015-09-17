@@ -76,6 +76,9 @@ namespace MvcApplication1.FormModels
         [Display(Name = "公开测试数据")]
         public bool PublicData { get; set; }
 
+        [Display(Name = "公开题解")]
+        public bool PublicSolution { get; set; }
+
         [Display(Name = "标签")]
         public int Tag { get; set; }
     }
@@ -113,8 +116,14 @@ namespace MvcApplication1.FormModels
         [Display(Name = "结束时间")]
         public DateTime End { get; set; }
 
-        [Display(Name = "公开")]
+        [Display(Name = "在开始后公开题目")]
         public bool Public { get; set; }
+
+        [Display(Name = "在结束后公开数据")]
+        public bool PublicData { get; set; }
+
+        [Display(Name = "在结束后公开题解")]
+        public bool PublicSolution { get; set; }
 
         [Display(Name = "题目列表")]
         public string ProbStr { get; set; }

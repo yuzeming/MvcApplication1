@@ -8,7 +8,7 @@
 <div class="well">
     @Html.DisplayFor(model => model.Name)
 </div>
-<b>必须先删除所有带有这个标签的题目，或者将这些题目切换到其他标签上。</b>
+<p>原属于这个分类的题目和比赛将属于(未分类)</p>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()

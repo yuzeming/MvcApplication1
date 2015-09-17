@@ -27,7 +27,8 @@ namespace MvcApplication1.Models
         {
             modelBuilder.Entity<Contest>().HasMany(x => x.ProbList).WithMany();
             modelBuilder.Entity<Contest>().HasMany(x => x.UserList).WithMany();
-       
+            modelBuilder.Entity<Contest>().HasOptional(x => x.Tag).WithMany().HasForeignKey(x => x.ContTag).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Problem>().HasOptional(x => x.Tag).WithMany().HasForeignKey(x => x.ProbTag).WillCascadeOnDelete(false);
         }
 
     }
@@ -89,7 +90,8 @@ namespace MvcApplication1.Models
         public IList<String> FileList { set; get; }
 
 
-        
+        public int? ProbTag { get; set; }
+        [ForeignKey("ProbTag")]
         public virtual Tag Tag { get; set; }
     }
 
@@ -162,10 +164,15 @@ namespace MvcApplication1.Models
         public int ID { get; set; }
 
         public string Title { get; set; }
+
         public DateTime Start { get; set; }
+
         public DateTime End { get; set; }
 
         public bool Public { get; set; }
+        public bool PublicData { get; set; }
+        public bool PublicSolution { get; set; }
+
 
         public virtual ICollection<UserProfile> UserList { get; set; }
         public virtual ICollection<Problem> ProbList { get; set; }
@@ -173,6 +180,9 @@ namespace MvcApplication1.Models
         public string Result { get; set; } // JSON
         public bool Update { get; set; }  // 惰性更新结果数据
 
+
+        public int? ContTag { get; set; }
+        [ForeignKey("ContTag")]
         public virtual Tag Tag { get; set; }
 
         public ContestState State

@@ -24,8 +24,47 @@ namespace MvcApplication1.Controllers
     {
         private MyDbContext db = new MyDbContext();
 
+        [NonAction]
+        public void Refresh()
+        {
+            foreach (var x in db.Contests.AsQueryable().Where( m => m.Public && m.Start < DateTime.Now).ToList() )
+            {
+                foreach (var p in x.ProbList.AsEnumerable().ToList())
+                {
+                    p.Public = true;
+                    db.Entry(p).State = EntityState.Modified;
+                }
+                x.Public = false;
+                db.SaveChanges();
+            }
+
+            foreach (var x in db.Contests.AsQueryable().Where(m => m.PublicData && m.End < DateTime.Now).ToList())
+            {
+                foreach (var p in x.ProbList.AsEnumerable().ToList())
+                {
+                    p.PublicData = true;
+                    db.Entry(p).State = EntityState.Modified;
+                }
+                x.PublicData = false;
+                db.SaveChanges();
+            }
+
+            foreach (var x in db.Contests.AsQueryable().Where(m => m.PublicSolution && m.End < DateTime.Now).ToList())
+            {
+                foreach (var p in x.ProbList.AsEnumerable().ToList())
+                {
+                    p.PublicSolution = true;
+                    db.Entry(p).State = EntityState.Modified;
+                }
+                x.PublicSolution = false;
+                db.SaveChanges();
+            }
+        }
+
         public ActionResult Index(int tag = 0)
         {
+            Refresh();
+
             var tmp = db.Submits.Where(m => m.User.UserId == WebSecurity.CurrentUserId)
                 .GroupBy(m => m.Prob.ID)
                 .Select(x => x.OrderByDescending(z => z.Time).FirstOrDefault())
@@ -139,7 +178,8 @@ namespace MvcApplication1.Controllers
                 prob.Title = form.Title;
                 prob.Public = form.Public;
                 prob.PublicData = form.PublicData;
-                prob.Tag = db.Tags.Find(form.Tag) ;
+                //prob.Tag = db.Tags.Find(form.Tag) ;
+                db.Entry(prob).Reference(m => m.Tag).CurrentValue = db.Tags.Find(form.Tag);
                 if (form.File != null)
                 {
                     prob.CheckSum = HelperFunc.HashFile(form.File.InputStream);
