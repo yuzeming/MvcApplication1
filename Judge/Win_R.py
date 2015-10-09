@@ -84,7 +84,7 @@ def CreatePipe():
     注意Win下创建管道市并没有真的创建。
     当向管道写入才会创建管道
     '''
-    pp = win32pipe.CreatePipe(sa, 0)
+    pp = win32pipe.CreatePipe(sa, 64000) #64K
     win32file.WriteFile(pp[1], "@")
     return pp
 
